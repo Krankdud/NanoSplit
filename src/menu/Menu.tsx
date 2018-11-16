@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as React from "react";
 import "./Menu.css";
 
@@ -33,10 +34,10 @@ class Menu extends React.Component<{}, IMenuState> {
       ? "sidenav sidenav-active"
       : "sidenav sidenav-inactive";
     return (
-      <div>
+      <span>
         <div className={sidenavClass}>
           <div className="sidenav-close" onClick={this.closeMenu}>
-            &times;
+            <FontAwesomeIcon icon="times" />
           </div>
           <div className="sidenav-item">New splits</div>
           <div className="sidenav-item">Edit splits</div>
@@ -44,8 +45,10 @@ class Menu extends React.Component<{}, IMenuState> {
           <div className="sidenav-item">Export</div>
           <div className="sidenav-item">Settings</div>
         </div>
-        <span onClick={this.openMenu}>Menu</span>
-      </div>
+        <span className="sidenav-menu" onClick={this.openMenu}>
+          <FontAwesomeIcon icon="bars" />
+        </span>
+      </span>
     );
   }
 }
