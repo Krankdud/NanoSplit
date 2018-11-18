@@ -9,7 +9,11 @@ import Timer from "./Timer";
 
 library.add(faBars, faTimes);
 
-class App extends React.Component {
+interface IAppState {
+  startTime: number;
+}
+
+class App extends React.Component<{}, IAppState> {
   public render() {
     return (
       <div className="App">
@@ -19,11 +23,11 @@ class App extends React.Component {
         </div>
         <Timer />
         <Split name="Split title" time={0} />
-        <Split name="Split title" time={0} />
-        <Split name="Split title" time={0} />
-        <Split name="Split title" time={0} />
-        <Split name="Split title" time={0} />
-        <Split name="Split title" time={0} />
+        <Split name="Split title" time={6000} />
+        <Split name="Split title" time={9000} />
+        <Split name="Split title" time={60000} />
+        <Split name="Split title" time={240000} />
+        <Split name="Split title" time={480000} />
         <div className="controls">
           <button className="controls-button">Undo</button>
           <button className="controls-button">Skip</button>

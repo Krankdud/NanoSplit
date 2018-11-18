@@ -19,7 +19,7 @@ class Split extends React.Component<ISplitProps> {
       <div className="split">
         <span className="split-title">{this.props.name}</span>
         <span className="split-time">
-          {millisecondsToString(this.props.time)}
+          {millisecondsToString(this.props.time, false)}
         </span>
       </div>
     );

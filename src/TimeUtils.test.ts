@@ -26,3 +26,9 @@ it("displays hours", () => {
   expect(millisecondsToString(4201000)).toEqual("1:10:01");
   expect(millisecondsToString(4210000)).toEqual("1:10:10");
 });
+
+it("doesn't display milliseconds", () => {
+  expect(millisecondsToString(0, false)).toEqual("0:00");
+  expect(millisecondsToString(1000, false)).toEqual("0:01");
+  expect(millisecondsToString(10000, false)).toEqual("0:10");
+});
