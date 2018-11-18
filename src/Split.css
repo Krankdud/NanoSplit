@@ -1,0 +1,14 @@
+.split {
+  display: flex;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.split-title {
+  flex: 1;
+}
+
+.split-time {
+  right: 0rem;
+}

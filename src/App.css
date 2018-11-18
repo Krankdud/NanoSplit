@@ -1,3 +1,29 @@
 .App {
   margin: 1rem;
 }
+
+.title {
+  font-size: 2rem;
+  text-align: center;
+  margin-left: 1rem;
+}
+
+.controls {
+  display: flex;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.controls-button {
+  flex: 1;
+  height: 4rem;
+  margin-left: 0.2rem;
+  margin-right: 0.2rem;
+  font-size: 1rem;
+  color: #222f3e;
+  background-color: #c8d6e5;
+  border-style: none;
+}
