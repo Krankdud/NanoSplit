@@ -18,12 +18,12 @@ class App extends React.Component {
           <span className="title">Title</span>
         </div>
         <Timer />
-        <Split />
-        <Split />
-        <Split />
-        <Split />
-        <Split />
-        <Split />
+        <Split name="Split title" time={0} />
+        <Split name="Split title" time={0} />
+        <Split name="Split title" time={0} />
+        <Split name="Split title" time={0} />
+        <Split name="Split title" time={0} />
+        <Split name="Split title" time={0} />
         <div className="controls">
           <button className="controls-button">Undo</button>
           <button className="controls-button">Skip</button>
