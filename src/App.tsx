@@ -4,6 +4,7 @@ import * as React from "react";
 import "./App.css";
 
 import Menu from "./menu/Menu";
+import ISegment from "./models/Segment";
 import Split from "./Split";
 import Timer from "./Timer";
 
@@ -14,7 +15,7 @@ interface IAppState {
   currentTime: number;
   isPaused: boolean;
   isTiming: boolean;
-  splits: number[];
+  splits: ISegment[];
 }
 
 class App extends React.Component<{}, IAppState> {
@@ -27,18 +28,18 @@ class App extends React.Component<{}, IAppState> {
       isPaused: false,
       isTiming: false,
       splits: [
-        5000,
-        10000,
-        15000,
-        20000,
-        25000,
-        30000,
-        35000,
-        40000,
-        45000,
-        50000,
-        55000,
-        60000
+        { title: "Split Title", pbTime: 5000 },
+        { title: "Split Title" },
+        { title: "Split Title", pbTime: 15000 },
+        { title: "Split Title", pbTime: 20000 },
+        { title: "Split Title", pbTime: 25000 },
+        { title: "Split Title", pbTime: 30000 },
+        { title: "Split Title", pbTime: 35000 },
+        { title: "Split Title", pbTime: 40000 },
+        { title: "Split Title", pbTime: 45000 },
+        { title: "Split Title", pbTime: 50000 },
+        { title: "Split Title", pbTime: 55000 },
+        { title: "Split Title", pbTime: 60000 }
       ],
       startTime: Date.now()
     };
@@ -68,7 +69,9 @@ class App extends React.Component<{}, IAppState> {
 
     const splits: JSX.Element[] = [];
     for (const split of this.state.splits) {
-      splits.push(<Split name="Split title" time={split} />);
+      splits.push(
+        <Split segment={split} currentTime={this.state.currentTime} />
+      );
     }
 
     return (

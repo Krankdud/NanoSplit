@@ -1,10 +1,11 @@
 import * as React from "react";
+import ISegment from "./models/Segment";
 import "./Split.css";
 import { millisecondsToString } from "./TimeUtils";
 
 interface ISplitProps {
-  name: string;
-  time: number;
+  segment: ISegment;
+  currentTime: number;
 }
 
 /**
@@ -15,12 +16,15 @@ interface ISplitProps {
  */
 class Split extends React.Component<ISplitProps> {
   public render() {
+    let time = "-";
+    if (this.props.segment.pbTime) {
+      time = millisecondsToString(this.props.segment.pbTime, false);
+    }
+
     return (
       <div className="split">
-        <span className="split-title">{this.props.name}</span>
-        <span className="split-time">
-          {millisecondsToString(this.props.time, false)}
-        </span>
+        <span className="split-title">{this.props.segment.title}</span>
+        <span className="split-time">{time}</span>
       </div>
     );
   }
