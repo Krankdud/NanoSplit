@@ -14,6 +14,7 @@ interface IAppState {
   currentTime: number;
   isPaused: boolean;
   isTiming: boolean;
+  splits: number[];
 }
 
 class App extends React.Component<{}, IAppState> {
@@ -25,6 +26,20 @@ class App extends React.Component<{}, IAppState> {
       currentTime: 0,
       isPaused: false,
       isTiming: false,
+      splits: [
+        5000,
+        10000,
+        15000,
+        20000,
+        25000,
+        30000,
+        35000,
+        40000,
+        45000,
+        50000,
+        55000,
+        60000
+      ],
       startTime: Date.now()
     };
   }
@@ -34,6 +49,11 @@ class App extends React.Component<{}, IAppState> {
   }
 
   public render() {
+    let clickAction;
+    if (!this.state.isTiming) {
+      clickAction = this.startTimer;
+    }
+
     let lastControlText = "Start";
     let lastControlAction = this.startTimer;
     if (this.state.isTiming) {
@@ -46,20 +66,20 @@ class App extends React.Component<{}, IAppState> {
       }
     }
 
+    const splits: JSX.Element[] = [];
+    for (const split of this.state.splits) {
+      splits.push(<Split name="Split title" time={split} />);
+    }
+
     return (
       <div className="App">
         <div>
           <Menu />
           <span className="title">Title</span>
         </div>
-        <div onClick={this.startTimer}>
+        <div onClick={clickAction}>
           <Timer time={this.state.currentTime} />
-          <Split name="Split title" time={0} />
-          <Split name="Split title" time={6000} />
-          <Split name="Split title" time={9000} />
-          <Split name="Split title" time={60000} />
-          <Split name="Split title" time={240000} />
-          <Split name="Split title" time={480000} />
+          {splits}
         </div>
         <div className="controls">
           <button className="controls-button">Undo</button>
