@@ -69,6 +69,7 @@ class App extends React.Component<{}, IAppState> {
     for (let i = 0; i < this.state.segments.length; i++) {
       splits.push(
         <Split
+          key={i}
           segment={this.state.segments[i]}
           currentTime={this.state.currentTime}
           isCurrentSplit={this.state.isTiming && this.state.currentSplit === i}
@@ -78,21 +79,23 @@ class App extends React.Component<{}, IAppState> {
 
     return (
       <div className="App">
-        <div>
+        <div className="header">
           <Menu />
           <span className="title">Title</span>
+          <div onClick={clickAction}>
+            <Timer time={this.state.currentTime} />
+          </div>
         </div>
-        <div onClick={clickAction}>
-          <Timer time={this.state.currentTime} />
+        <div className="splits" onClick={clickAction}>
           {splits}
         </div>
         <div className="controls">
-          <button className="controls-button">Undo</button>
+          <button className="controls-button ml-0">Undo</button>
           <button className="controls-button">Skip</button>
           <button className="controls-button" onClick={this.resetTimer}>
             Reset
           </button>
-          <button className="controls-button" onClick={lastControlAction}>
+          <button className="controls-button mr-0" onClick={lastControlAction}>
             {lastControlText}
           </button>
         </div>

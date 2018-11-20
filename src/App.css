@@ -8,13 +8,29 @@
   margin-left: 1rem;
 }
 
+.header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  background-color: #222f3e;
+}
+
+.splits {
+  margin-top: 177px;
+}
+
 .controls {
   display: flex;
   position: fixed;
   left: 0;
   bottom: 0;
-  width: 100%;
-  margin-bottom: 1rem;
+  right: 0;
+  padding: 1rem;
+  background-color: #222f3e;
 }
 
 .controls-button {
@@ -26,4 +42,12 @@
   color: #222f3e;
   background-color: #c8d6e5;
   border-style: none;
+}
+
+.ml-0 {
+  margin-left: 0;
+}
+
+.mr-0 {
+  margin-right: 0;
 }
