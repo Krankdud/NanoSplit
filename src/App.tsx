@@ -37,7 +37,13 @@ class App extends React.Component<{}, IAppState> {
         { title: "Split Title", pbTime: 25000 },
         { title: "Split Title", pbTime: 30000 },
         { title: "Split Title", pbTime: 35000 },
-        { title: "Split Title", pbTime: 40000 }
+        { title: "Split Title", pbTime: 40000 },
+        { title: "Split Title", pbTime: 45000 },
+        { title: "Split Title", pbTime: 50000 },
+        { title: "Split Title", pbTime: 55000 },
+        { title: "Split Title", pbTime: 60000 },
+        { title: "Split Title", pbTime: 65000 },
+        { title: "Split Title", pbTime: 70000 }
       ],
       startTime: Date.now()
     };
