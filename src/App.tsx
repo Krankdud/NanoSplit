@@ -85,16 +85,6 @@ class App extends React.Component<{}, IAppState> {
 
     return (
       <div className="App">
-        <div className="header">
-          <Menu />
-          <span className="title">Title</span>
-          <div onClick={clickAction}>
-            <Timer time={this.state.currentTime} />
-          </div>
-        </div>
-        <div className="splits" onClick={clickAction}>
-          {splits}
-        </div>
         <div className="controls">
           <button className="controls-button ml-0">Undo</button>
           <button className="controls-button">Skip</button>
@@ -104,6 +94,16 @@ class App extends React.Component<{}, IAppState> {
           <button className="controls-button mr-0" onClick={lastControlAction}>
             {lastControlText}
           </button>
+        </div>
+        <div className="header">
+          <Menu />
+          <span className="title">Title</span>
+          <div onClick={clickAction}>
+            <Timer time={this.state.currentTime} />
+          </div>
+        </div>
+        <div className="splits" onClick={clickAction}>
+          {splits}
         </div>
       </div>
     );
