@@ -12,3 +12,7 @@
 .split-time {
   right: 0rem;
 }
+
+.split-active {
+  background-color: #2e86de;
+}

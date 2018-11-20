@@ -13,9 +13,10 @@ library.add(faBars, faTimes);
 interface IAppState {
   startTime: number;
   currentTime: number;
+  currentSplit: number;
   isPaused: boolean;
   isTiming: boolean;
-  splits: ISegment[];
+  segments: ISegment[];
 }
 
 class App extends React.Component<{}, IAppState> {
@@ -24,10 +25,11 @@ class App extends React.Component<{}, IAppState> {
   constructor(props: any) {
     super(props);
     this.state = {
+      currentSplit: 0,
       currentTime: 0,
       isPaused: false,
       isTiming: false,
-      splits: [
+      segments: [
         { title: "Split Title", pbTime: 5000 },
         { title: "Split Title" },
         { title: "Split Title", pbTime: 15000 },
@@ -35,11 +37,7 @@ class App extends React.Component<{}, IAppState> {
         { title: "Split Title", pbTime: 25000 },
         { title: "Split Title", pbTime: 30000 },
         { title: "Split Title", pbTime: 35000 },
-        { title: "Split Title", pbTime: 40000 },
-        { title: "Split Title", pbTime: 45000 },
-        { title: "Split Title", pbTime: 50000 },
-        { title: "Split Title", pbTime: 55000 },
-        { title: "Split Title", pbTime: 60000 }
+        { title: "Split Title", pbTime: 40000 }
       ],
       startTime: Date.now()
     };
@@ -50,9 +48,9 @@ class App extends React.Component<{}, IAppState> {
   }
 
   public render() {
-    let clickAction;
-    if (!this.state.isTiming) {
-      clickAction = this.startTimer;
+    let clickAction = this.startTimer;
+    if (this.state.isTiming) {
+      clickAction = this.splitTimer;
     }
 
     let lastControlText = "Start";
@@ -68,9 +66,13 @@ class App extends React.Component<{}, IAppState> {
     }
 
     const splits: JSX.Element[] = [];
-    for (const split of this.state.splits) {
+    for (let i = 0; i < this.state.segments.length; i++) {
       splits.push(
-        <Split segment={split} currentTime={this.state.currentTime} />
+        <Split
+          segment={this.state.segments[i]}
+          currentTime={this.state.currentTime}
+          isCurrentSplit={this.state.isTiming && this.state.currentSplit === i}
+        />
       );
     }
 
@@ -101,11 +103,29 @@ class App extends React.Component<{}, IAppState> {
   private startTimer = () => {
     clearInterval(this.interval);
     this.setState({
+      currentSplit: 0,
       isPaused: false,
       isTiming: true,
       startTime: Date.now()
     });
     this.createInterval();
+  };
+
+  private splitTimer = () => {
+    if (this.state.isPaused) {
+      return;
+    }
+
+    if (this.state.currentSplit === this.state.segments.length - 1) {
+      clearInterval(this.interval);
+      this.setState({
+        isTiming: false
+      });
+    } else {
+      this.setState({
+        currentSplit: this.state.currentSplit + 1
+      });
+    }
   };
 
   private pauseTimer = () => {

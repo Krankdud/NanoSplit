@@ -6,6 +6,7 @@ import { millisecondsToString } from "./TimeUtils";
 interface ISplitProps {
   segment: ISegment;
   currentTime: number;
+  isCurrentSplit: boolean;
 }
 
 /**
@@ -21,8 +22,13 @@ class Split extends React.Component<ISplitProps> {
       time = millisecondsToString(this.props.segment.pbTime, false);
     }
 
+    let divClass = "split";
+    if (this.props.isCurrentSplit) {
+      divClass += " split-active";
+    }
+
     return (
-      <div className="split">
+      <div className={divClass}>
         <span className="split-title">{this.props.segment.title}</span>
         <span className="split-time">{time}</span>
       </div>
