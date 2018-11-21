@@ -95,7 +95,7 @@ class App extends React.Component<{}, IAppState> {
 
     return (
       <div className="App">
-        <div className="controls">
+        <div id="controls" className="controls">
           <button className="controls-button ml-0" onClick={this.undoSegment}>
             Undo
           </button>
@@ -133,6 +133,8 @@ class App extends React.Component<{}, IAppState> {
       startTime: Date.now()
     });
     this.createInterval();
+
+    this.scrollToCurrentSplit();
   };
 
   private splitTimer = () => {
@@ -142,6 +144,7 @@ class App extends React.Component<{}, IAppState> {
 
     this.setSegmentTime(this.state.currentTime);
 
+    // Stop the timer if this was the last split
     if (this.state.currentSplit >= this.state.segments.length - 1) {
       clearInterval(this.interval);
       this.setState({
@@ -152,6 +155,8 @@ class App extends React.Component<{}, IAppState> {
         currentSplit: this.state.currentSplit + 1
       });
     }
+
+    this.scrollToCurrentSplit();
   };
 
   private pauseTimer = () => {
@@ -219,6 +224,21 @@ class App extends React.Component<{}, IAppState> {
     this.setState({
       history: this.state.history.concat([{ segmentTimes }])
     });
+  };
+
+  private scrollToCurrentSplit = () => {
+    const controls = document.getElementById("controls");
+    if (controls) {
+      const controlsHeight = controls.getBoundingClientRect().height;
+      window.scrollTo({
+        behavior: "smooth",
+        left: 0,
+        top:
+          (this.state.currentSplit - 1) * Constants.SPLITS_HEIGHT -
+          Constants.SPLITS_MARGIN -
+          controlsHeight
+      });
+    }
   };
 }
 
