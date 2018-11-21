@@ -14,9 +14,13 @@ interface IAppState {
   startTime: number;
   currentTime: number;
   currentSplit: number;
+  history: IHistory[];
   isPaused: boolean;
   isTiming: boolean;
   segments: ISegment[];
+}
+
+interface IHistory {
   segmentTimes: number[];
 }
 
@@ -28,9 +32,9 @@ class App extends React.Component<{}, IAppState> {
     this.state = {
       currentSplit: 0,
       currentTime: 0,
+      history: [{ segmentTimes: [] }],
       isPaused: false,
       isTiming: false,
-      segmentTimes: [],
       segments: [
         { title: "Split Title", pbTime: 5000 },
         { title: "Split Title" },
@@ -81,7 +85,9 @@ class App extends React.Component<{}, IAppState> {
           segment={this.state.segments[i]}
           currentTime={this.state.currentTime}
           isCurrentSplit={this.state.isTiming && this.state.currentSplit === i}
-          segmentTime={this.state.segmentTimes[i]}
+          segmentTime={
+            this.state.history[this.state.currentSplit].segmentTimes[i]
+          }
         />
       );
     }
@@ -89,7 +95,9 @@ class App extends React.Component<{}, IAppState> {
     return (
       <div className="App">
         <div className="controls">
-          <button className="controls-button ml-0">Undo</button>
+          <button className="controls-button ml-0" onClick={this.undoTimer}>
+            Undo
+          </button>
           <button className="controls-button">Skip</button>
           <button className="controls-button" onClick={this.resetTimer}>
             Reset
@@ -116,9 +124,9 @@ class App extends React.Component<{}, IAppState> {
     clearInterval(this.interval);
     this.setState({
       currentSplit: 0,
+      history: [{ segmentTimes: [] }],
       isPaused: false,
       isTiming: true,
-      segmentTimes: [],
       startTime: Date.now()
     });
     this.createInterval();
@@ -129,8 +137,12 @@ class App extends React.Component<{}, IAppState> {
       return;
     }
 
+    const currentSplit = this.state.currentSplit;
+    const segmentTimes = this.state.history[currentSplit].segmentTimes.concat([
+      this.state.currentTime
+    ]);
     this.setState({
-      segmentTimes: this.state.segmentTimes.concat([this.state.currentTime])
+      history: this.state.history.concat([{ segmentTimes }])
     });
 
     if (this.state.currentSplit === this.state.segments.length - 1) {
@@ -164,9 +176,21 @@ class App extends React.Component<{}, IAppState> {
   private resetTimer = () => {
     clearInterval(this.interval);
     this.setState({
+      currentSplit: 0,
       currentTime: 0,
-      isTiming: false,
-      segmentTimes: []
+      history: [{ segmentTimes: [] }],
+      isTiming: false
+    });
+  };
+
+  private undoTimer = () => {
+    if (this.state.currentSplit === 0 || !this.state.isTiming) {
+      return;
+    }
+
+    this.setState({
+      currentSplit: this.state.currentSplit - 1,
+      history: this.state.history.slice(0, this.state.currentSplit)
     });
   };
 
