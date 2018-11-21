@@ -142,7 +142,7 @@ class App extends React.Component<{}, IAppState> {
 
     this.setSegmentTime(this.state.currentTime);
 
-    if (this.state.currentSplit === this.state.segments.length - 1) {
+    if (this.state.currentSplit >= this.state.segments.length - 1) {
       clearInterval(this.interval);
       this.setState({
         isTiming: false
