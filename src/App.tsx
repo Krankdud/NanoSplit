@@ -17,6 +17,7 @@ interface IAppState {
   isPaused: boolean;
   isTiming: boolean;
   segments: ISegment[];
+  segmentTimes: number[];
 }
 
 class App extends React.Component<{}, IAppState> {
@@ -29,6 +30,7 @@ class App extends React.Component<{}, IAppState> {
       currentTime: 0,
       isPaused: false,
       isTiming: false,
+      segmentTimes: [],
       segments: [
         { title: "Split Title", pbTime: 5000 },
         { title: "Split Title" },
@@ -79,6 +81,7 @@ class App extends React.Component<{}, IAppState> {
           segment={this.state.segments[i]}
           currentTime={this.state.currentTime}
           isCurrentSplit={this.state.isTiming && this.state.currentSplit === i}
+          segmentTime={this.state.segmentTimes[i]}
         />
       );
     }
@@ -115,15 +118,20 @@ class App extends React.Component<{}, IAppState> {
       currentSplit: 0,
       isPaused: false,
       isTiming: true,
+      segmentTimes: [],
       startTime: Date.now()
     });
     this.createInterval();
   };
 
   private splitTimer = () => {
-    if (this.state.isPaused) {
+    if (this.state.isPaused || !this.state.isTiming) {
       return;
     }
+
+    this.setState({
+      segmentTimes: this.state.segmentTimes.concat([this.state.currentTime])
+    });
 
     if (this.state.currentSplit === this.state.segments.length - 1) {
       clearInterval(this.interval);
@@ -157,7 +165,8 @@ class App extends React.Component<{}, IAppState> {
     clearInterval(this.interval);
     this.setState({
       currentTime: 0,
-      isTiming: false
+      isTiming: false,
+      segmentTimes: []
     });
   };
 
