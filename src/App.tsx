@@ -3,6 +3,7 @@ import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import * as React from "react";
 import "./App.css";
 
+import Constants from "./Constants";
 import Menu from "./menu/Menu";
 import ISegment from "./models/Segment";
 import Split from "./Split";
@@ -95,10 +96,12 @@ class App extends React.Component<{}, IAppState> {
     return (
       <div className="App">
         <div className="controls">
-          <button className="controls-button ml-0" onClick={this.undoTimer}>
+          <button className="controls-button ml-0" onClick={this.undoSegment}>
             Undo
           </button>
-          <button className="controls-button">Skip</button>
+          <button className="controls-button" onClick={this.skipSegment}>
+            Skip
+          </button>
           <button className="controls-button" onClick={this.resetTimer}>
             Reset
           </button>
@@ -137,13 +140,7 @@ class App extends React.Component<{}, IAppState> {
       return;
     }
 
-    const currentSplit = this.state.currentSplit;
-    const segmentTimes = this.state.history[currentSplit].segmentTimes.concat([
-      this.state.currentTime
-    ]);
-    this.setState({
-      history: this.state.history.concat([{ segmentTimes }])
-    });
+    this.setSegmentTime(this.state.currentTime);
 
     if (this.state.currentSplit === this.state.segments.length - 1) {
       clearInterval(this.interval);
@@ -183,7 +180,7 @@ class App extends React.Component<{}, IAppState> {
     });
   };
 
-  private undoTimer = () => {
+  private undoSegment = () => {
     if (this.state.currentSplit === 0 || !this.state.isTiming) {
       return;
     }
@@ -194,11 +191,33 @@ class App extends React.Component<{}, IAppState> {
     });
   };
 
+  private skipSegment = () => {
+    if (!this.state.isTiming) {
+      return;
+    }
+
+    this.setSegmentTime(Constants.SKIPPED);
+
+    this.setState({
+      currentSplit: this.state.currentSplit + 1
+    });
+  };
+
   private createInterval = () => {
     this.interval = setInterval(() => {
       this.setState({
         currentTime: Date.now() - this.state.startTime
       });
+    });
+  };
+
+  private setSegmentTime = (time: number) => {
+    const currentSplit = this.state.currentSplit;
+    const segmentTimes = this.state.history[currentSplit].segmentTimes.concat([
+      time
+    ]);
+    this.setState({
+      history: this.state.history.concat([{ segmentTimes }])
     });
   };
 }
