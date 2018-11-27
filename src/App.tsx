@@ -118,7 +118,13 @@ class App extends React.Component<{}, IAppState> {
         </div>
         <div className="header">
           <div className="title-bar">
-            <Menu />
+            <Menu>
+              <div className="sidenav-item">New splits</div>
+              <div className="sidenav-item">Edit splits</div>
+              <div className="sidenav-item">Import</div>
+              <div className="sidenav-item">Export</div>
+              <div className="sidenav-item">Settings</div>
+            </Menu>
             <div className="title">
               {this.state.run.game}
               <br />

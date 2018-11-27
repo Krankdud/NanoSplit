@@ -39,11 +39,7 @@ class Menu extends React.Component<{}, IMenuState> {
           <div className="sidenav-close" onClick={this.closeMenu}>
             <FontAwesomeIcon icon="times" />
           </div>
-          <div className="sidenav-item">New splits</div>
-          <div className="sidenav-item">Edit splits</div>
-          <div className="sidenav-item">Import</div>
-          <div className="sidenav-item">Export</div>
-          <div className="sidenav-item">Settings</div>
+          {this.props.children}
         </div>
         <div className="sidenav-menu" onClick={this.openMenu}>
           <FontAwesomeIcon icon="bars" />
