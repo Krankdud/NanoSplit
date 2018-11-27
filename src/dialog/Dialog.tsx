@@ -3,24 +3,25 @@ import * as React from "react";
 import "./Dialog.css";
 
 interface IDialogProps {
-  onClose: () => void;
   isOpen: boolean;
+  onClose: () => void;
+  title: string;
 }
 
 class Dialog extends React.Component<IDialogProps> {
   public render() {
     const className = this.props.isOpen
-      ? "modal modal-active"
-      : "modal modal-inactive";
+      ? "dialog dialog-active"
+      : "dialog dialog-inactive";
     return (
       <div className={className}>
-        <div className="modal-header">
-          <div className="modal-close" onClick={this.props.onClose}>
+        <div className="dialog-header">
+          <div className="dialog-close" onClick={this.props.onClose}>
             <FontAwesomeIcon icon="times" />
           </div>
-          Title
+          {this.props.title}
         </div>
-        <div className="modal-content">Content</div>
+        <div className="dialog-content">{this.props.children}</div>
       </div>
     );
   }

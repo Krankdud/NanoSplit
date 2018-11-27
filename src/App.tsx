@@ -123,7 +123,9 @@ class App extends React.Component<{}, IAppState> {
               <div className="sidenav-item">Edit splits</div>
               <div className="sidenav-item">Import</div>
               <div className="sidenav-item">Export</div>
-              <div className="sidenav-item">Settings</div>
+              <div className="sidenav-item" onClick={this.openSettings}>
+                Settings
+              </div>
             </Menu>
             <div className="title">
               {this.state.run.game}
@@ -138,7 +140,13 @@ class App extends React.Component<{}, IAppState> {
         <div className="splits" id="splits" onClick={clickAction}>
           {splits}
         </div>
-        <Dialog isOpen={this.state.showDialog} onClose={this.closeModal} />
+        <Dialog
+          isOpen={this.state.showDialog}
+          onClose={this.closeModal}
+          title="Settings"
+        >
+          Content
+        </Dialog>
       </div>
     );
   }
@@ -268,6 +276,10 @@ class App extends React.Component<{}, IAppState> {
         top: target
       });
     }
+  };
+
+  private openSettings = () => {
+    this.setState({ showDialog: true });
   };
 
   private closeModal = () => {
