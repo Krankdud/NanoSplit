@@ -4,6 +4,7 @@ import * as React from "react";
 import "./App.css";
 
 import Constants from "./Constants";
+import Dialog from "./dialog/Dialog";
 import Menu from "./menu/Menu";
 import IRun from "./models/Run";
 import Split from "./Split";
@@ -12,13 +13,14 @@ import Timer from "./Timer";
 library.add(faBars, faTimes);
 
 interface IAppState {
-  startTime: number;
   currentTime: number;
   currentSplit: number;
   history: IHistory[];
   isPaused: boolean;
   isTiming: boolean;
   run: IRun;
+  showDialog: boolean;
+  startTime: number;
 }
 
 interface IHistory {
@@ -56,6 +58,7 @@ class App extends React.Component<{}, IAppState> {
           { title: "13", pbTime: 70000 }
         ]
       },
+      showDialog: false,
       startTime: Date.now()
     };
   }
@@ -129,6 +132,7 @@ class App extends React.Component<{}, IAppState> {
         <div className="splits" id="splits" onClick={clickAction}>
           {splits}
         </div>
+        <Dialog isOpen={this.state.showDialog} onClose={this.closeModal} />
       </div>
     );
   }
@@ -258,6 +262,10 @@ class App extends React.Component<{}, IAppState> {
         top: target
       });
     }
+  };
+
+  private closeModal = () => {
+    this.setState({ showDialog: false });
   };
 }
 
