@@ -20,6 +20,7 @@ interface IAppState {
   isTiming: boolean;
   run: IRun;
   showDialog: boolean;
+  showMenu: boolean;
   startTime: number;
 }
 
@@ -59,6 +60,7 @@ class App extends React.Component<{}, IAppState> {
         ]
       },
       showDialog: false,
+      showMenu: false,
       startTime: Date.now()
     };
   }
@@ -118,7 +120,11 @@ class App extends React.Component<{}, IAppState> {
         </div>
         <div className="header">
           <div className="title-bar">
-            <Menu>
+            <Menu
+              isOpen={this.state.showMenu}
+              openCallback={this.openMenu}
+              closeCallback={this.closeMenu}
+            >
               <div className="sidenav-item">New splits</div>
               <div className="sidenav-item">Edit splits</div>
               <div className="sidenav-item">Import</div>
@@ -279,11 +285,19 @@ class App extends React.Component<{}, IAppState> {
   };
 
   private openSettings = () => {
-    this.setState({ showDialog: true });
+    this.setState({ showDialog: true, showMenu: false });
   };
 
   private closeModal = () => {
     this.setState({ showDialog: false });
+  };
+
+  private openMenu = () => {
+    this.setState({ showMenu: true });
+  };
+
+  private closeMenu = () => {
+    this.setState({ showMenu: false });
   };
 }
 

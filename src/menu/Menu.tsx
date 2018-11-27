@@ -2,46 +2,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as React from "react";
 import "./Menu.css";
 
-interface IMenuState {
+interface IMenuProps {
+  closeCallback: () => void;
   isOpen: boolean;
+  openCallback: () => void;
 }
 
-class Menu extends React.Component<{}, IMenuState> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      isOpen: false
-    };
-
-    this.openMenu = this.openMenu.bind(this);
-    this.closeMenu = this.closeMenu.bind(this);
-  }
-
-  public openMenu() {
-    this.setState({
-      isOpen: true
-    });
-  }
-
-  public closeMenu() {
-    this.setState({
-      isOpen: false
-    });
-  }
-
+class Menu extends React.Component<IMenuProps> {
   public render() {
-    const sidenavClass = this.state.isOpen
+    const sidenavClass = this.props.isOpen
       ? "sidenav sidenav-active"
       : "sidenav sidenav-inactive";
     return (
       <div>
         <div className={sidenavClass}>
-          <div className="sidenav-close" onClick={this.closeMenu}>
+          <div className="sidenav-close" onClick={this.props.closeCallback}>
             <FontAwesomeIcon icon="times" />
           </div>
           {this.props.children}
         </div>
-        <div className="sidenav-menu" onClick={this.openMenu}>
+        <div className="sidenav-menu" onClick={this.props.openCallback}>
           <FontAwesomeIcon icon="bars" />
         </div>
       </div>
