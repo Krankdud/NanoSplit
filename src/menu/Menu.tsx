@@ -34,7 +34,7 @@ class Menu extends React.Component<{}, IMenuState> {
       ? "sidenav sidenav-active"
       : "sidenav sidenav-inactive";
     return (
-      <span>
+      <div>
         <div className={sidenavClass}>
           <div className="sidenav-close" onClick={this.closeMenu}>
             <FontAwesomeIcon icon="times" />
@@ -45,10 +45,10 @@ class Menu extends React.Component<{}, IMenuState> {
           <div className="sidenav-item">Export</div>
           <div className="sidenav-item">Settings</div>
         </div>
-        <span className="sidenav-menu" onClick={this.openMenu}>
+        <div className="sidenav-menu" onClick={this.openMenu}>
           <FontAwesomeIcon icon="bars" />
-        </span>
-      </span>
+        </div>
+      </div>
     );
   }
 }

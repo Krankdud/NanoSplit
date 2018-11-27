@@ -2,9 +2,14 @@
   margin: 1rem;
 }
 
+.title-bar {
+  display: flex;
+}
+
 .title {
-  font-size: 2rem;
-  text-align: center;
+  flex: auto;
+  font-size: 1.2rem;
+  text-align: left;
   margin-left: 1rem;
 }
 
@@ -17,10 +22,12 @@
   padding-right: 1rem;
   padding-top: 1rem;
   background-color: #222f3e;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
 }
 
 .splits {
-  margin-top: 177px;
+  margin-top: 156px;
   margin-bottom: 96px;
 }
 
@@ -32,6 +39,8 @@
   right: 0;
   padding: 1rem;
   background-color: #222f3e;
+  border-top-style: solid;
+  border-top-width: 2px;
 }
 
 .controls-button {

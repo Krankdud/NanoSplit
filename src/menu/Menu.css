@@ -8,6 +8,7 @@
   overflow-x: hidden;
   white-space: nowrap;
   transition: 0.5s;
+  transition-timing-function: ease-out;
   padding-top: 5rem;
   font-size: 2rem;
 }
@@ -34,5 +35,5 @@
 }
 
 .sidenav-menu {
-  font-size: 2rem;
+  font-size: 2.5rem;
 }

@@ -5,7 +5,7 @@ import "./App.css";
 
 import Constants from "./Constants";
 import Menu from "./menu/Menu";
-import ISegment from "./models/Segment";
+import IRun from "./models/Run";
 import Split from "./Split";
 import Timer from "./Timer";
 
@@ -18,7 +18,7 @@ interface IAppState {
   history: IHistory[];
   isPaused: boolean;
   isTiming: boolean;
-  segments: ISegment[];
+  run: IRun;
 }
 
 interface IHistory {
@@ -36,22 +36,26 @@ class App extends React.Component<{}, IAppState> {
       history: [{ segmentTimes: [] }],
       isPaused: false,
       isTiming: false,
-      segments: [
-        { title: "Split Title", pbTime: 5000 },
-        { title: "Split Title" },
-        { title: "Split Title", pbTime: 15000 },
-        { title: "Split Title", pbTime: 20000 },
-        { title: "Split Title", pbTime: 25000 },
-        { title: "Split Title", pbTime: 30000 },
-        { title: "Split Title", pbTime: 35000 },
-        { title: "Split Title", pbTime: 40000 },
-        { title: "Split Title", pbTime: 45000 },
-        { title: "Split Title", pbTime: 50000 },
-        { title: "Split Title", pbTime: 55000 },
-        { title: "Split Title", pbTime: 60000 },
-        { title: "Split Title", pbTime: 65000 },
-        { title: "Split Title", pbTime: 70000 }
-      ],
+      run: {
+        category: "Any%",
+        game: "Super Metroid",
+        segments: [
+          { title: "0", pbTime: 5000 },
+          { title: "1" },
+          { title: "2", pbTime: 15000 },
+          { title: "3", pbTime: 20000 },
+          { title: "4", pbTime: 25000 },
+          { title: "5", pbTime: 30000 },
+          { title: "6", pbTime: 35000 },
+          { title: "7", pbTime: 40000 },
+          { title: "8", pbTime: 45000 },
+          { title: "9", pbTime: 50000 },
+          { title: "10", pbTime: 55000 },
+          { title: "11", pbTime: 60000 },
+          { title: "12", pbTime: 65000 },
+          { title: "13", pbTime: 70000 }
+        ]
+      },
       startTime: Date.now()
     };
   }
@@ -79,11 +83,11 @@ class App extends React.Component<{}, IAppState> {
     }
 
     const splits: JSX.Element[] = [];
-    for (let i = 0; i < this.state.segments.length; i++) {
+    for (let i = 0; i < this.state.run.segments.length; i++) {
       splits.push(
         <Split
           key={i}
-          segment={this.state.segments[i]}
+          segment={this.state.run.segments[i]}
           currentTime={this.state.currentTime}
           isCurrentSplit={this.state.isTiming && this.state.currentSplit === i}
           segmentTime={
@@ -110,13 +114,19 @@ class App extends React.Component<{}, IAppState> {
           </button>
         </div>
         <div className="header">
-          <Menu />
-          <span className="title">Title</span>
+          <div className="title-bar">
+            <Menu />
+            <div className="title">
+              {this.state.run.game}
+              <br />
+              {this.state.run.category}
+            </div>
+          </div>
           <div onClick={clickAction}>
             <Timer time={this.state.currentTime} />
           </div>
         </div>
-        <div className="splits" onClick={clickAction}>
+        <div className="splits" id="splits" onClick={clickAction}>
           {splits}
         </div>
       </div>
@@ -134,7 +144,7 @@ class App extends React.Component<{}, IAppState> {
     });
     this.createInterval();
 
-    this.scrollToCurrentSplit();
+    this.scrollToSplit(0);
   };
 
   private splitTimer = () => {
@@ -142,21 +152,21 @@ class App extends React.Component<{}, IAppState> {
       return;
     }
 
+    let currentSplit = this.state.currentSplit;
     this.setSegmentTime(this.state.currentTime);
 
     // Stop the timer if this was the last split
-    if (this.state.currentSplit >= this.state.segments.length - 1) {
+    if (this.state.currentSplit >= this.state.run.segments.length - 1) {
       clearInterval(this.interval);
       this.setState({
         isTiming: false
       });
     } else {
-      this.setState({
-        currentSplit: this.state.currentSplit + 1
-      });
+      currentSplit += 1;
+      this.setState({ currentSplit });
     }
 
-    this.scrollToCurrentSplit();
+    this.scrollToSplit(currentSplit);
   };
 
   private pauseTimer = () => {
@@ -226,17 +236,26 @@ class App extends React.Component<{}, IAppState> {
     });
   };
 
-  private scrollToCurrentSplit = () => {
+  private scrollToSplit = (currentSplit: number) => {
+    if (document.documentElement === null) {
+      return;
+    }
+    const windowHeight = document.documentElement.clientHeight;
     const controls = document.getElementById("controls");
-    if (controls) {
+    const splits = document.getElementById("splits");
+    if (controls && splits) {
       const controlsHeight = controls.getBoundingClientRect().height;
+      const splitsHeight = splits.getBoundingClientRect().height;
+      const numOfSplits = this.state.run.segments.length;
+      const bottom =
+        Constants.SPLITS_MARGIN +
+        splitsHeight -
+        (numOfSplits - currentSplit - 1) * Constants.SPLITS_HEIGHT;
+      const target = bottom - windowHeight + controlsHeight;
       window.scrollTo({
         behavior: "smooth",
         left: 0,
-        top:
-          (this.state.currentSplit - 1) * Constants.SPLITS_HEIGHT -
-          Constants.SPLITS_MARGIN -
-          controlsHeight
+        top: target
       });
     }
   };
