@@ -1,20 +1,23 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faSort, faTimes } from "@fortawesome/free-solid-svg-icons";
 import * as React from "react";
 import "./App.css";
 
 import Constants from "./Constants";
 import Dialog from "./dialog/Dialog";
+import EditSplits from "./dialogs/EditSplits";
 import Menu from "./menu/Menu";
+import IDialogData from "./models/DialogData";
 import IRun from "./models/Run";
 import Split from "./Split";
 import Timer from "./Timer";
 
-library.add(faBars, faTimes);
+library.add(faBars, faSort, faTimes);
 
 interface IAppState {
   currentTime: number;
   currentSplit: number;
+  dialog: IDialogData;
   history: IHistory[];
   isPaused: boolean;
   isTiming: boolean;
@@ -36,6 +39,9 @@ class App extends React.Component<{}, IAppState> {
     this.state = {
       currentSplit: 0,
       currentTime: 0,
+      dialog: {
+        title: ""
+      },
       history: [{ segmentTimes: [] }],
       isPaused: false,
       isTiming: false,
@@ -126,7 +132,9 @@ class App extends React.Component<{}, IAppState> {
               closeCallback={this.closeMenu}
             >
               <div className="sidenav-item">New splits</div>
-              <div className="sidenav-item">Edit splits</div>
+              <div className="sidenav-item" onClick={this.openEditSplits}>
+                Edit splits
+              </div>
               <div className="sidenav-item">Import</div>
               <div className="sidenav-item">Export</div>
               <div className="sidenav-item" onClick={this.openSettings}>
@@ -149,9 +157,9 @@ class App extends React.Component<{}, IAppState> {
         <Dialog
           isOpen={this.state.showDialog}
           onClose={this.closeModal}
-          title="Settings"
+          title={this.state.dialog.title}
         >
-          Content
+          {this.state.dialog.contents}
         </Dialog>
       </div>
     );
@@ -282,6 +290,17 @@ class App extends React.Component<{}, IAppState> {
         top: target
       });
     }
+  };
+
+  private openEditSplits = () => {
+    this.setState({
+      dialog: {
+        contents: <EditSplits />,
+        title: "Edit splits"
+      },
+      showDialog: true,
+      showMenu: false
+    });
   };
 
   private openSettings = () => {

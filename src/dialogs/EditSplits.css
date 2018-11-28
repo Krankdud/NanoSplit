@@ -1,0 +1,28 @@
+.editsplits-split {
+  display: flex;
+}
+
+.editsplits-split input[type="text"] {
+  flex: 1;
+}
+
+.editsplits-split-sort {
+  font-size: 2rem;
+  margin-left: 1rem;
+  margin-right: 0.5rem;
+  margin-top: 0.1rem;
+}
+
+.editsplits-buttons {
+  float: right;
+}
+
+.editsplits-buttons-button {
+  margin-left: 0.4rem;
+  padding: 1rem;
+  font-size: 1rem;
+  color: #222f3e;
+  background-color: #c8d6e5;
+  border-style: none;
+  border-radius: 0.5rem;
+}
