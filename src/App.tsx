@@ -173,7 +173,7 @@ class App extends React.Component<{}, IAppState> {
         </div>
         <Dialog
           isOpen={this.state.showDialog}
-          onClose={this.closeModal}
+          onClose={this.closeDialog}
           title={this.state.dialog.title}
         >
           {this.state.dialog.contents}
@@ -299,7 +299,7 @@ class App extends React.Component<{}, IAppState> {
       const bottom =
         Constants.SPLITS_MARGIN +
         splitsHeight -
-        (numOfSplits - currentSplit - 1) * Constants.SPLITS_HEIGHT;
+        (numOfSplits - currentSplit - 1) * Constants.SPLIT_HEIGHT;
       const target = bottom - windowHeight + controlsHeight;
       window.scrollTo({
         behavior: "smooth",
@@ -315,10 +315,7 @@ class App extends React.Component<{}, IAppState> {
       game: "",
       segments: []
     };
-    this.setState({
-      run,
-      showMenu: false
-    });
+    this.setState({ run, showMenu: false });
   };
 
   private openEditSplits = () => {
@@ -335,15 +332,21 @@ class App extends React.Component<{}, IAppState> {
   };
 
   private confirmEditSplits = (run: IRun) => {
-    this.setState({ showDialog: false, run });
+    this.setState({ run });
+    this.closeDialog();
   };
 
   private openSettings = () => {
     this.setState({ showDialog: true, showMenu: false });
   };
 
-  private closeModal = () => {
+  private closeDialog = () => {
     this.setState({ showDialog: false });
+    window.setTimeout(() => {
+      this.setState({
+        dialog: { title: "" }
+      });
+    }, Constants.DIALOG_CLOSE_TIME_IN_MS);
   };
 
   private openMenu = () => {
