@@ -108,6 +108,25 @@ class App extends React.Component<{}, IAppState> {
       );
     }
 
+    let title: JSX.Element;
+    if (this.state.run.game === "" && this.state.run.category === "") {
+      title = <div className="title title-large">NanoSplit</div>;
+    } else if (this.state.run.game === "") {
+      title = (
+        <div className="title title-large">{this.state.run.category}</div>
+      );
+    } else if (this.state.run.category === "") {
+      title = <div className="title title-large">{this.state.run.game}</div>;
+    } else {
+      title = (
+        <div className="title">
+          {this.state.run.game}
+          <br />
+          {this.state.run.category}
+        </div>
+      );
+    }
+
     return (
       <div className="App">
         <div id="controls" className="controls">
@@ -131,7 +150,9 @@ class App extends React.Component<{}, IAppState> {
               openCallback={this.openMenu}
               closeCallback={this.closeMenu}
             >
-              <div className="sidenav-item">New splits</div>
+              <div className="sidenav-item" onClick={this.newSplits}>
+                New splits
+              </div>
               <div className="sidenav-item" onClick={this.openEditSplits}>
                 Edit splits
               </div>
@@ -141,11 +162,7 @@ class App extends React.Component<{}, IAppState> {
                 Settings
               </div>
             </Menu>
-            <div className="title">
-              {this.state.run.game}
-              <br />
-              {this.state.run.category}
-            </div>
+            {title}
           </div>
           <div onClick={clickAction}>
             <Timer time={this.state.currentTime} />
@@ -290,6 +307,18 @@ class App extends React.Component<{}, IAppState> {
         top: target
       });
     }
+  };
+
+  private newSplits = () => {
+    const run: IRun = {
+      category: "",
+      game: "",
+      segments: []
+    };
+    this.setState({
+      run,
+      showMenu: false
+    });
   };
 
   private openEditSplits = () => {

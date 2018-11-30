@@ -11,6 +11,13 @@
   font-size: 1.2rem;
   text-align: left;
   margin-left: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.title-large {
+  font-size: 2rem;
 }
 
 .header {

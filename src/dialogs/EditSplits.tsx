@@ -62,6 +62,7 @@ class EditSplits extends React.Component<IEditSplitsProps, IEditSplitsState> {
                 type="text"
                 name="category"
                 defaultValue={this.state.category}
+                onChange={this.handleInputChange}
               />
             </label>
           </div>
