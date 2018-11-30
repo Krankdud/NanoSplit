@@ -1,5 +1,13 @@
 .editsplits-split {
   display: flex;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-left: -1rem;
+  margin-right: -1rem;
+}
+
+.editsplits-split-selected {
+  background-color: #2e86de;
 }
 
 .editsplits-split input[type="text"] {

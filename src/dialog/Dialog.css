@@ -18,6 +18,8 @@
 }
 
 .dialog-header {
+  position: fixed;
+  width: 100%;
   padding-top: 1rem;
   padding-bottom: 1rem;
   background-color: #576574;
@@ -34,6 +36,7 @@
 
 .dialog-content {
   margin: 1rem;
+  margin-top: 80px;
   font-size: 1.2rem;
 }
 

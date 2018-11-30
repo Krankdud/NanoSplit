@@ -49,20 +49,20 @@ class App extends React.Component<{}, IAppState> {
         category: "Any%",
         game: "Super Metroid",
         segments: [
-          { title: "0", pbTime: 5000 },
-          { title: "1" },
-          { title: "2", pbTime: 15000 },
-          { title: "3", pbTime: 20000 },
-          { title: "4", pbTime: 25000 },
-          { title: "5", pbTime: 30000 },
-          { title: "6", pbTime: 35000 },
-          { title: "7", pbTime: 40000 },
-          { title: "8", pbTime: 45000 },
-          { title: "9", pbTime: 50000 },
-          { title: "10", pbTime: 55000 },
-          { title: "11", pbTime: 60000 },
-          { title: "12", pbTime: 65000 },
-          { title: "13", pbTime: 70000 }
+          { id: "", title: "0", pbTime: 5000 },
+          { id: "", title: "1" },
+          { id: "", title: "2", pbTime: 15000 },
+          { id: "", title: "3", pbTime: 20000 },
+          { id: "", title: "4", pbTime: 25000 },
+          { id: "", title: "5", pbTime: 30000 },
+          { id: "", title: "6", pbTime: 35000 },
+          { id: "", title: "7", pbTime: 40000 },
+          { id: "", title: "8", pbTime: 45000 },
+          { id: "", title: "9", pbTime: 50000 },
+          { id: "", title: "10", pbTime: 55000 },
+          { id: "", title: "11", pbTime: 60000 },
+          { id: "", title: "12", pbTime: 65000 },
+          { id: "", title: "13", pbTime: 70000 }
         ]
       },
       showDialog: false,
@@ -295,12 +295,18 @@ class App extends React.Component<{}, IAppState> {
   private openEditSplits = () => {
     this.setState({
       dialog: {
-        contents: <EditSplits />,
+        contents: (
+          <EditSplits run={this.state.run} onConfirm={this.confirmEditSplits} />
+        ),
         title: "Edit splits"
       },
       showDialog: true,
       showMenu: false
     });
+  };
+
+  private confirmEditSplits = (run: IRun) => {
+    this.setState({ showDialog: false, run });
   };
 
   private openSettings = () => {
