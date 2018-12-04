@@ -1,6 +1,8 @@
+import IDialogOptions from "src/dialog/DialogOptions";
+
 interface IDialogData {
   contents?: JSX.Element;
-  title: string;
+  options: IDialogOptions;
 }
 
 export default IDialogData;

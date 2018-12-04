@@ -5,6 +5,7 @@ import "./App.css";
 
 import Constants from "./Constants";
 import Dialog from "./dialog/Dialog";
+import { DialogType } from "./dialog/DialogOptions";
 import EditSplits from "./dialogs/EditSplits";
 import Menu from "./menu/Menu";
 import IDialogData from "./models/DialogData";
@@ -40,7 +41,11 @@ class App extends React.Component<{}, IAppState> {
       currentSplit: 0,
       currentTime: 0,
       dialog: {
-        title: ""
+        options: {
+          showCloseButton: true,
+          title: "",
+          type: DialogType.Modal
+        }
       },
       history: [{ segmentTimes: [] }],
       isPaused: false,
@@ -150,7 +155,7 @@ class App extends React.Component<{}, IAppState> {
               openCallback={this.openMenu}
               closeCallback={this.closeMenu}
             >
-              <div className="sidenav-item" onClick={this.newSplits}>
+              <div className="sidenav-item" onClick={this.openNewSplits}>
                 New splits
               </div>
               <div className="sidenav-item" onClick={this.openEditSplits}>
@@ -158,9 +163,7 @@ class App extends React.Component<{}, IAppState> {
               </div>
               <div className="sidenav-item">Import</div>
               <div className="sidenav-item">Export</div>
-              <div className="sidenav-item" onClick={this.openSettings}>
-                Settings
-              </div>
+              <div className="sidenav-item">Settings</div>
             </Menu>
             {title}
           </div>
@@ -174,7 +177,7 @@ class App extends React.Component<{}, IAppState> {
         <Dialog
           isOpen={this.state.showDialog}
           onClose={this.closeDialog}
-          title={this.state.dialog.title}
+          options={this.state.dialog.options}
         >
           {this.state.dialog.contents}
         </Dialog>
@@ -315,7 +318,31 @@ class App extends React.Component<{}, IAppState> {
       game: "",
       segments: []
     };
-    this.setState({ run, showMenu: false });
+    this.setState({ run, showDialog: false, showMenu: false });
+  };
+
+  private openNewSplits = () => {
+    this.setState({
+      dialog: {
+        contents: (
+          <div>
+            Are you sure you want to create new splits? Your previous splits
+            will be erased.
+          </div>
+        ),
+        options: {
+          onCancel: this.closeDialog,
+          onConfirm: this.newSplits,
+          showCancelButton: true,
+          showCloseButton: false,
+          showConfirmButton: true,
+          title: "Create new splits",
+          type: DialogType.Modal
+        }
+      },
+      showDialog: true,
+      showMenu: false
+    });
   };
 
   private openEditSplits = () => {
@@ -324,7 +351,11 @@ class App extends React.Component<{}, IAppState> {
         contents: (
           <EditSplits run={this.state.run} onConfirm={this.confirmEditSplits} />
         ),
-        title: "Edit splits"
+        options: {
+          showCloseButton: true,
+          title: "Edit splits",
+          type: DialogType.Fullscreen
+        }
       },
       showDialog: true,
       showMenu: false
@@ -336,15 +367,17 @@ class App extends React.Component<{}, IAppState> {
     this.closeDialog();
   };
 
-  private openSettings = () => {
-    this.setState({ showDialog: true, showMenu: false });
-  };
-
   private closeDialog = () => {
     this.setState({ showDialog: false });
     window.setTimeout(() => {
       this.setState({
-        dialog: { title: "" }
+        dialog: {
+          options: {
+            showCloseButton: true,
+            title: "",
+            type: DialogType.Modal
+          }
+        }
       });
     }, Constants.DIALOG_CLOSE_TIME_IN_MS);
   };
