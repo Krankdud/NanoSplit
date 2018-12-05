@@ -10,23 +10,25 @@ interface IDialogProps {
 }
 
 class Dialog extends React.Component<IDialogProps> {
+  private lastDialogType: DialogType = DialogType.Modal;
+
   public render() {
-    let dialogClass = "dialog";
-    let headerClass = "dialog-header";
-    if (this.props.options.type === DialogType.Fullscreen) {
-      dialogClass = "dialog-fullscreen";
-      headerClass += " dialog-header-fullscreen";
-    }
-    if (!this.props.isOpen) {
-      dialogClass += " dialog-inactive";
-    } else if (this.props.options.type === DialogType.Fullscreen) {
-      dialogClass += " dialog-active-fullscreen";
-    } else {
-      dialogClass += " dialog-active";
+    if (this.props.isOpen) {
+      this.lastDialogType = this.props.options.type;
     }
 
+    const dialogClass =
+      this.lastDialogType === DialogType.Modal ? "dialog" : "dialog-fullscreen";
+    const transitionClass = this.props.isOpen
+      ? "dialog-transition-active"
+      : "dialog-transition-inactive";
+    const headerClass =
+      this.lastDialogType === DialogType.Modal
+        ? "dialog-header"
+        : "dialog-header dialog-header-fullscreen";
+
     return (
-      <div>
+      <div className={transitionClass}>
         {this.props.options.type === DialogType.Modal && this.props.isOpen && (
           <div className="dialog-background" />
         )}
