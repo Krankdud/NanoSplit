@@ -33,6 +33,10 @@
   border-bottom-width: 2px;
 }
 
+.sidenav-menu {
+  font-size: 2.5rem;
+}
+
 .splits {
   margin-top: 156px;
   margin-bottom: 96px;

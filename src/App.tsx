@@ -3,6 +3,7 @@ import { faBars, faSort, faTimes } from "@fortawesome/free-solid-svg-icons";
 import * as React from "react";
 import "./App.css";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Constants from "./Constants";
 import Dialog from "./dialog/Dialog";
 import { DialogType } from "./dialog/DialogOptions";
@@ -150,21 +151,9 @@ class App extends React.Component<{}, IAppState> {
         </div>
         <div className="header">
           <div className="title-bar">
-            <Menu
-              isOpen={this.state.showMenu}
-              openCallback={this.openMenu}
-              closeCallback={this.closeMenu}
-            >
-              <div className="sidenav-item" onClick={this.openNewSplits}>
-                New splits
-              </div>
-              <div className="sidenav-item" onClick={this.openEditSplits}>
-                Edit splits
-              </div>
-              <div className="sidenav-item">Import</div>
-              <div className="sidenav-item">Export</div>
-              <div className="sidenav-item">Settings</div>
-            </Menu>
+            <div className="sidenav-menu" onClick={this.openMenu}>
+              <FontAwesomeIcon icon="bars" />
+            </div>
             {title}
           </div>
           <div onClick={clickAction}>
@@ -174,6 +163,17 @@ class App extends React.Component<{}, IAppState> {
         <div className="splits" id="splits" onClick={clickAction}>
           {splits}
         </div>
+        <Menu isOpen={this.state.showMenu} closeCallback={this.closeMenu}>
+          <div className="sidenav-item" onClick={this.openNewSplits}>
+            New splits
+          </div>
+          <div className="sidenav-item" onClick={this.openEditSplits}>
+            Edit splits
+          </div>
+          <div className="sidenav-item">Import</div>
+          <div className="sidenav-item">Export</div>
+          <div className="sidenav-item">Settings</div>
+        </Menu>
         <Dialog
           isOpen={this.state.showDialog}
           onClose={this.closeDialog}

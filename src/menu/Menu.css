@@ -34,6 +34,12 @@
   margin-bottom: 1rem;
 }
 
-.sidenav-menu {
-  font-size: 2.5rem;
+.sidenav-background {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  opacity: 0.5;
 }
