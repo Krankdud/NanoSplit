@@ -7,8 +7,8 @@
   background-color: #576574;
   overflow-x: hidden;
   white-space: nowrap;
-  transition: 0.2s;
-  transition-timing-function: ease-out;
+  transition: 0.4s;
+  transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   padding-top: 5rem;
   font-size: 2rem;
 }

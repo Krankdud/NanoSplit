@@ -1,6 +1,6 @@
 # NanoSplit
 
-NanoSplit is a web based speedrun timer built using TypeScript and React.
+NanoSplit is a web based speedrun timer built using TypeScript and React. This timer is designed to be used on mobile. If you are using a desktop, I recommend using [LiveSplit](http://livesplit.org/) instead.
 
 ## Todo
 

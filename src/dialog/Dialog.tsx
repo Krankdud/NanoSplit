@@ -22,10 +22,6 @@ class Dialog extends React.Component<IDialogProps> {
     const transitionClass = this.props.isOpen
       ? "dialog-transition-active"
       : "dialog-transition-inactive";
-    const headerClass =
-      this.lastDialogType === DialogType.Modal
-        ? "dialog-header"
-        : "dialog-header dialog-header-fullscreen";
 
     return (
       <div className={transitionClass}>
@@ -33,7 +29,7 @@ class Dialog extends React.Component<IDialogProps> {
           <div className="dialog-background" />
         )}
         <div className={dialogClass}>
-          <div className={headerClass}>
+          <div className="dialog-header">
             {this.props.options.showCloseButton && (
               <div className="dialog-close" onClick={this.props.onClose}>
                 <FontAwesomeIcon icon="times" />
