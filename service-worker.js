@@ -11,11 +11,11 @@
  * See https://goo.gl/2aRDsh
  */
 
-importScripts("/nanosplit/workbox-v3.6.3/workbox-sw.js");
-workbox.setConfig({modulePathPrefix: "/nanosplit/workbox-v3.6.3"});
+importScripts("/NanoSplit/workbox-v3.6.3/workbox-sw.js");
+workbox.setConfig({modulePathPrefix: "/NanoSplit/workbox-v3.6.3"});
 
 importScripts(
-  "/nanosplit/precache-manifest.8fa52525960c0d6a8b93a64278fc2071.js"
+  "/NanoSplit/precache-manifest.c6265b3423098037ca73e0b8d8116aa6.js"
 );
 
 workbox.clientsClaim();
@@ -29,7 +29,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/nanosplit/index.html", {
+workbox.routing.registerNavigationRoute("/NanoSplit/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
