@@ -108,6 +108,12 @@ class EditSplits extends React.Component<IEditSplitsProps, IEditSplitsState> {
       this.setState({ game: value });
     } else if (name === "category") {
       this.setState({ category: value });
+    } else {
+      this.state.segments.forEach(segment => {
+        if (segment.id === name) {
+          segment.title = value;
+        }
+      });
     }
   };
 
@@ -184,6 +190,7 @@ class EditSplits extends React.Component<IEditSplitsProps, IEditSplitsState> {
                 type="text"
                 name={segmentId}
                 defaultValue={this.state.segments[i].title}
+                onChange={this.handleInputChange}
               />
               <div className="editsplits-split-sort">
                 <FontAwesomeIcon icon="sort" />
