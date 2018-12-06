@@ -135,20 +135,7 @@ class App extends React.Component<{}, IAppState> {
 
     return (
       <div className="App">
-        <div id="controls" className="controls">
-          <button className="controls-button ml-0" onClick={this.undoSegment}>
-            Undo
-          </button>
-          <button className="controls-button" onClick={this.skipSegment}>
-            Skip
-          </button>
-          <button className="controls-button" onClick={this.resetTimer}>
-            Reset
-          </button>
-          <button className="controls-button mr-0" onClick={lastControlAction}>
-            {lastControlText}
-          </button>
-        </div>
+        <div className="clickable" onClick={clickAction} />
         <div className="header">
           <div className="title-bar">
             <div className="sidenav-menu" onClick={this.openMenu}>
@@ -162,6 +149,20 @@ class App extends React.Component<{}, IAppState> {
         </div>
         <div className="splits" id="splits" onClick={clickAction}>
           {splits}
+        </div>
+        <div id="controls" className="controls">
+          <button className="controls-button ml-0" onClick={this.undoSegment}>
+            Undo
+          </button>
+          <button className="controls-button" onClick={this.skipSegment}>
+            Skip
+          </button>
+          <button className="controls-button" onClick={this.resetTimer}>
+            Reset
+          </button>
+          <button className="controls-button mr-0" onClick={lastControlAction}>
+            {lastControlText}
+          </button>
         </div>
         <Menu isOpen={this.state.showMenu} closeCallback={this.closeMenu}>
           <div className="sidenav-item" onClick={this.openNewSplits}>
