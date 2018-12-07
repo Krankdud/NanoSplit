@@ -8,6 +8,7 @@ import Constants from "./Constants";
 import Dialog from "./dialog/Dialog";
 import { DialogType } from "./dialog/DialogOptions";
 import EditSplits from "./dialogs/EditSplits";
+import ImportForm from "./dialogs/ImportForm";
 import Menu from "./menu/Menu";
 import IDialogData from "./models/DialogData";
 import IRun from "./models/Run";
@@ -171,7 +172,9 @@ class App extends React.Component<{}, IAppState> {
           <div className="sidenav-item" onClick={this.openEditSplits}>
             Edit splits
           </div>
-          <div className="sidenav-item">Import</div>
+          <div className="sidenav-item" onClick={this.openImport}>
+            Import
+          </div>
           <div className="sidenav-item">Export</div>
           <div className="sidenav-item">Settings</div>
         </Menu>
@@ -356,6 +359,21 @@ class App extends React.Component<{}, IAppState> {
           showCloseButton: true,
           title: "Edit splits",
           type: DialogType.Fullscreen
+        }
+      },
+      showDialog: true,
+      showMenu: false
+    });
+  };
+
+  private openImport = () => {
+    this.setState({
+      dialog: {
+        contents: <ImportForm />,
+        options: {
+          showCloseButton: true,
+          title: "Import",
+          type: DialogType.Modal
         }
       },
       showDialog: true,
