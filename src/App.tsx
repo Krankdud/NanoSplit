@@ -369,7 +369,7 @@ class App extends React.Component<{}, IAppState> {
   private openImport = () => {
     this.setState({
       dialog: {
-        contents: <ImportForm />,
+        contents: <ImportForm onImport={this.onImport} />,
         options: {
           showCloseButton: true,
           title: "Import",
@@ -407,6 +407,10 @@ class App extends React.Component<{}, IAppState> {
 
   private closeMenu = () => {
     this.setState({ showMenu: false });
+  };
+
+  private onImport = (run: IRun) => {
+    this.setState({ run, showDialog: false, showMenu: false });
   };
 }
 
