@@ -1,23 +1,38 @@
 import * as React from "react";
 import parseLiveSplit from "../livesplit/Parser";
 import IRun from "../models/Run";
+import "./ImportForm.css";
 
 interface IImportFormProps {
   onImport: (run: IRun) => void;
 }
 
-class ImportForm extends React.Component<IImportFormProps> {
+interface IImportFormState {
+  errorOcurred: boolean;
+}
+
+class ImportForm extends React.Component<IImportFormProps, IImportFormState> {
   private fileInput: React.RefObject<HTMLInputElement>;
 
   constructor(props: IImportFormProps) {
     super(props);
+    this.state = {
+      errorOcurred: false
+    };
     this.fileInput = React.createRef<HTMLInputElement>();
   }
 
   public render() {
     return (
       <div>
-        Import splits from <a href="https://www.livesplit.org">LiveSplit</a>
+        {this.state.errorOcurred && (
+          <div className="import-error">
+            An error occurred while reading the file. Please try again.
+          </div>
+        )}
+        <div className="import-description">
+          Import splits from <a href="https://www.livesplit.org">LiveSplit</a>
+        </div>
         <form onSubmit={this.handleSubmit}>
           <input type="file" accept=".lss" ref={this.fileInput} />
           <input type="submit" value="Import" />
@@ -31,28 +46,39 @@ class ImportForm extends React.Component<IImportFormProps> {
     if (this.fileInput.current && this.fileInput.current.files) {
       const fileReader = new FileReader();
       fileReader.readAsText(this.fileInput.current.files[0]);
+
       fileReader.onload = (e: ProgressEvent) => {
         const result = fileReader.result;
         if (typeof result === "string") {
-          const liveSplitRun = parseLiveSplit(result);
-          const run: IRun = {
-            category: liveSplitRun.category || "",
-            game: liveSplitRun.game || "",
-            segments: []
-          };
-          liveSplitRun.segments.forEach(segment => {
-            run.segments.push({
-              bestTime: this.convertLiveSplitTimeToMS(
-                segment.bestSegmentTime.realTime
-              ),
-              id: "",
-              pbTime: this.convertLiveSplitTimeToMS(
-                segment.splitTimes[0].realTime
-              ),
-              title: segment.name || ""
+          try {
+            const liveSplitRun = parseLiveSplit(result);
+            const run: IRun = {
+              category: liveSplitRun.category || "",
+              game: liveSplitRun.game || "",
+              segments: []
+            };
+            liveSplitRun.segments.forEach(segment => {
+              run.segments.push({
+                bestTime: this.convertLiveSplitTimeToMS(
+                  segment.bestSegmentTime.realTime
+                ),
+                id: "",
+                pbTime: this.convertLiveSplitTimeToMS(
+                  segment.splitTimes[0].realTime
+                ),
+                title: segment.name || ""
+              });
             });
-          });
-          this.props.onImport(run);
+            this.props.onImport(run);
+          } catch (error) {
+            this.setState({ errorOcurred: true });
+          }
+        }
+      };
+
+      fileReader.onloadend = (e: ProgressEvent) => {
+        if (fileReader.error) {
+          this.setState({ errorOcurred: true });
         }
       };
     }

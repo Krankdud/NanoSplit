@@ -53,24 +53,9 @@ class App extends React.Component<{}, IAppState> {
       isPaused: false,
       isTiming: false,
       run: {
-        category: "Any%",
-        game: "Super Metroid",
-        segments: [
-          { id: "", title: "0", pbTime: 5000 },
-          { id: "", title: "1" },
-          { id: "", title: "2", pbTime: 15000 },
-          { id: "", title: "3", pbTime: 20000 },
-          { id: "", title: "4", pbTime: 25000 },
-          { id: "", title: "5", pbTime: 30000 },
-          { id: "", title: "6", pbTime: 35000 },
-          { id: "", title: "7", pbTime: 40000 },
-          { id: "", title: "8", pbTime: 45000 },
-          { id: "", title: "9", pbTime: 50000 },
-          { id: "", title: "10", pbTime: 55000 },
-          { id: "", title: "11", pbTime: 60000 },
-          { id: "", title: "12", pbTime: 65000 },
-          { id: "", title: "13", pbTime: 70000 }
-        ]
+        category: "",
+        game: "",
+        segments: []
       },
       showDialog: false,
       showMenu: false,
@@ -322,7 +307,8 @@ class App extends React.Component<{}, IAppState> {
       game: "",
       segments: []
     };
-    this.setState({ run, showDialog: false, showMenu: false });
+    this.setState({ run });
+    this.closeDialog();
   };
 
   private openNewSplits = () => {
@@ -381,6 +367,11 @@ class App extends React.Component<{}, IAppState> {
     });
   };
 
+  private onImport = (run: IRun) => {
+    this.setState({ run });
+    this.closeDialog();
+  };
+
   private confirmEditSplits = (run: IRun) => {
     this.setState({ run });
     this.closeDialog();
@@ -407,10 +398,6 @@ class App extends React.Component<{}, IAppState> {
 
   private closeMenu = () => {
     this.setState({ showMenu: false });
-  };
-
-  private onImport = (run: IRun) => {
-    this.setState({ run, showDialog: false, showMenu: false });
   };
 }
 

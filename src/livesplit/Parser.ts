@@ -1,6 +1,11 @@
 function parseLiveSplit(text: string): ILiveSplitRun {
   const parser = new DOMParser();
   const xml = parser.parseFromString(text, "application/xml");
+  if (xml.documentElement && xml.documentElement.nodeName === "parseerror") {
+    throw Error(
+      xml.documentElement.childNodes[0].nodeValue || "Error parsing XML"
+    );
+  }
   const root = xml.getElementsByTagName("Run")[0];
   const game = root.getElementsByTagName("GameName")[0].childNodes[0].nodeValue;
   const category = root.getElementsByTagName("CategoryName")[0].childNodes[0]
