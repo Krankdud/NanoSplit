@@ -15,7 +15,7 @@ importScripts("/NanoSplit/workbox-v3.6.3/workbox-sw.js");
 workbox.setConfig({modulePathPrefix: "/NanoSplit/workbox-v3.6.3"});
 
 importScripts(
-  "/NanoSplit/precache-manifest.c6265b3423098037ca73e0b8d8116aa6.js"
+  "/NanoSplit/precache-manifest.69f482017bf539a9d76e3d332bb04d55.js"
 );
 
 workbox.clientsClaim();
