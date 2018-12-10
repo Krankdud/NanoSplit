@@ -8,7 +8,7 @@ interface ITimerProps {
 
 class Timer extends React.Component<ITimerProps> {
   public render() {
-    const milliseconds = Math.floor((this.props.time % 1000) / 10);
+    const milliseconds = Math.floor((Math.abs(this.props.time) % 1000) / 10);
     let msString = ".";
     if (milliseconds < 10) {
       msString += "0";

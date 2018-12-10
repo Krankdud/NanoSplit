@@ -10,7 +10,10 @@ export function millisecondsToString(
   milliseconds: number,
   showMilliseconds: boolean = true
 ) {
-  let str = "";
+  // Check if the time is negative
+  let str = milliseconds < 0 ? "-" : "";
+  milliseconds = Math.abs(milliseconds);
+
   let seconds = Math.floor(milliseconds / 1000);
   let minutes = Math.floor(seconds / 60);
   const hours = Math.floor(minutes / 60);
