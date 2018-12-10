@@ -21,6 +21,7 @@ interface IAppState {
   currentTime: number;
   currentSplit: number;
   dialog: IDialogData;
+  hasTapped: boolean;
   history: IHistory[];
   isPaused: boolean;
   isTiming: boolean;
@@ -49,6 +50,7 @@ class App extends React.Component<{}, IAppState> {
           type: DialogType.Modal
         }
       },
+      hasTapped: false,
       history: [{ segmentTimes: [] }],
       isPaused: false,
       isTiming: false,
@@ -68,11 +70,6 @@ class App extends React.Component<{}, IAppState> {
   }
 
   public render() {
-    let clickAction = this.startTimer;
-    if (this.state.isTiming) {
-      clickAction = this.splitTimer;
-    }
-
     let lastControlText = "Start";
     let lastControlAction = this.startTimer;
     if (this.state.isTiming) {
@@ -121,7 +118,7 @@ class App extends React.Component<{}, IAppState> {
 
     return (
       <div className="App">
-        <div className="clickable" onClick={clickAction} />
+        <div className="clickable" onClick={this.onTap} />
         <div className="header">
           <div className="title-bar">
             <div className="sidenav-menu" onClick={this.openMenu}>
@@ -129,26 +126,38 @@ class App extends React.Component<{}, IAppState> {
             </div>
             {title}
           </div>
-          <div onClick={clickAction}>
+          <div onClick={this.onTap}>
             <Timer time={this.state.currentTime} />
           </div>
         </div>
-        <div className="splits" id="splits" onClick={clickAction}>
+        <div className="splits" id="splits" onClick={this.onTap}>
           {splits}
         </div>
-        <div id="controls" className="controls">
-          <button className="controls-button ml-0" onClick={this.undoSegment}>
-            Undo
-          </button>
-          <button className="controls-button" onClick={this.skipSegment}>
-            Skip
-          </button>
-          <button className="controls-button" onClick={this.resetTimer}>
-            Reset
-          </button>
-          <button className="controls-button mr-0" onClick={lastControlAction}>
-            {lastControlText}
-          </button>
+        <div id="footer" className="footer">
+          <div className="controls">
+            <button className="controls-button ml-0" onClick={this.undoSegment}>
+              Undo
+            </button>
+            <button className="controls-button" onClick={this.skipSegment}>
+              Skip
+            </button>
+            <button className="controls-button" onClick={this.resetTimer}>
+              Reset
+            </button>
+            <button
+              className="controls-button mr-0"
+              onClick={lastControlAction}
+            >
+              {lastControlText}
+            </button>
+          </div>
+          <div
+            className={
+              this.state.hasTapped ? "tap-hint tap-hint-done" : "tap-hint"
+            }
+          >
+            Tap anywhere to start/split the timer
+          </div>
         </div>
         <Menu isOpen={this.state.showMenu} closeCallback={this.closeMenu}>
           <div className="sidenav-item" onClick={this.openNewSplits}>
@@ -173,6 +182,15 @@ class App extends React.Component<{}, IAppState> {
       </div>
     );
   }
+
+  private onTap = () => {
+    if (this.state.isTiming) {
+      this.splitTimer();
+    } else {
+      this.startTimer();
+    }
+    this.setState({ hasTapped: true });
+  };
 
   private startTimer = () => {
     clearInterval(this.interval);
@@ -282,17 +300,17 @@ class App extends React.Component<{}, IAppState> {
       return;
     }
     const windowHeight = document.documentElement.clientHeight;
-    const controls = document.getElementById("controls");
+    const footer = document.getElementById("footer");
     const splits = document.getElementById("splits");
-    if (controls && splits) {
-      const controlsHeight = controls.getBoundingClientRect().height;
+    if (footer && splits) {
+      const footerHeight = footer.getBoundingClientRect().height;
       const splitsHeight = splits.getBoundingClientRect().height;
       const numOfSplits = this.state.run.segments.length;
       const bottom =
         Constants.SPLITS_MARGIN +
         splitsHeight -
         (numOfSplits - currentSplit - 1) * Constants.SPLIT_HEIGHT;
-      const target = bottom - windowHeight + controlsHeight;
+      const target = bottom - windowHeight + footerHeight;
       window.scrollTo({
         behavior: "smooth",
         left: 0,

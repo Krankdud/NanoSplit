@@ -50,16 +50,19 @@
   margin-bottom: 96px;
 }
 
-.controls {
-  display: flex;
+.footer {
   position: fixed;
   left: 0;
-  bottom: 0;
   right: 0;
+  bottom: 0;
   padding: 1rem;
   background-color: #222f3e;
   border-top-style: solid;
   border-top-width: 2px;
+}
+
+.controls {
+  display: flex;
 }
 
 .controls-button {
@@ -72,6 +75,20 @@
   background-color: #c8d6e5;
   border-style: none;
   border-radius: 0.5rem;
+}
+
+.tap-hint {
+  text-align: center;
+  height: 1.1rem;
+  margin-top: 0.5rem;
+  margin-bottom: -0.5rem;
+  transition-duration: 0.5s;
+  transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  overflow: hidden;
+}
+
+.tap-hint-done {
+  height: 0;
 }
 
 .ml-0 {
