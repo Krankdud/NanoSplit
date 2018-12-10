@@ -17,6 +17,7 @@ interface IEditSplitsProps {
 
 interface IEditSplitsState {
   category: string;
+  delay: number;
   game: string;
   segments: ISegment[];
   selectedIndex?: number;
@@ -35,6 +36,7 @@ class EditSplits extends React.Component<IEditSplitsProps, IEditSplitsState> {
     }
     this.state = {
       category: this.props.run.category,
+      delay: this.props.run.delay,
       game: this.props.run.game,
       segments
     };
@@ -67,6 +69,17 @@ class EditSplits extends React.Component<IEditSplitsProps, IEditSplitsState> {
             </label>
           </div>
           <div>
+            <label>
+              Start delay (seconds){" "}
+              <input
+                type="text"
+                name="delay"
+                defaultValue="0"
+                onChange={this.handleInputChange}
+              />
+            </label>
+          </div>
+          <div>
             <div>Splits</div>
             <DragDropContext onDragEnd={this.onDragEnd}>
               {this.makeDroppable()}
@@ -94,6 +107,7 @@ class EditSplits extends React.Component<IEditSplitsProps, IEditSplitsState> {
     event.preventDefault();
     this.props.onConfirm({
       category: this.state.category,
+      delay: this.state.delay * 1000,
       game: this.state.game,
       segments: this.state.segments.slice()
     });
@@ -108,6 +122,8 @@ class EditSplits extends React.Component<IEditSplitsProps, IEditSplitsState> {
       this.setState({ game: value });
     } else if (name === "category") {
       this.setState({ category: value });
+    } else if (name === "delay") {
+      this.setState({ delay: parseInt(value, 10) });
     } else {
       this.state.segments.forEach(segment => {
         if (segment.id === name) {

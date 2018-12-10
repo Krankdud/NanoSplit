@@ -56,6 +56,7 @@ class App extends React.Component<{}, IAppState> {
       isTiming: false,
       run: {
         category: "",
+        delay: 0,
         game: "",
         segments: []
       },
@@ -199,7 +200,7 @@ class App extends React.Component<{}, IAppState> {
       history: [{ segmentTimes: [] }],
       isPaused: false,
       isTiming: true,
-      startTime: Date.now()
+      startTime: Date.now() + this.state.run.delay
     });
     this.createInterval();
 
@@ -207,7 +208,11 @@ class App extends React.Component<{}, IAppState> {
   };
 
   private splitTimer = () => {
-    if (this.state.isPaused || !this.state.isTiming) {
+    if (
+      this.state.isPaused ||
+      !this.state.isTiming ||
+      this.state.currentTime < 0
+    ) {
       return;
     }
 
@@ -248,7 +253,7 @@ class App extends React.Component<{}, IAppState> {
     clearInterval(this.interval);
     this.setState({
       currentSplit: 0,
-      currentTime: 0,
+      currentTime: -this.state.run.delay,
       history: [{ segmentTimes: [] }],
       isTiming: false
     });
@@ -322,6 +327,7 @@ class App extends React.Component<{}, IAppState> {
   private newSplits = () => {
     const run: IRun = {
       category: "",
+      delay: 0,
       game: "",
       segments: []
     };
@@ -386,12 +392,14 @@ class App extends React.Component<{}, IAppState> {
   };
 
   private onImport = (run: IRun) => {
-    this.setState({ run });
+    this.resetTimer();
+    this.setState({ currentTime: -run.delay, run });
     this.closeDialog();
   };
 
   private confirmEditSplits = (run: IRun) => {
-    this.setState({ run });
+    this.resetTimer();
+    this.setState({ currentTime: -run.delay, run });
     this.closeDialog();
   };
 

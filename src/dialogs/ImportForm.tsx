@@ -1,4 +1,5 @@
 import * as React from "react";
+import Constants from "src/Constants";
 import parseLiveSplit from "../livesplit/Parser";
 import IRun from "../models/Run";
 import "./ImportForm.css";
@@ -54,6 +55,9 @@ class ImportForm extends React.Component<IImportFormProps, IImportFormState> {
             const liveSplitRun = parseLiveSplit(result);
             const run: IRun = {
               category: liveSplitRun.category || "",
+              delay: liveSplitRun.offset
+                ? this.convertLiveSplitTimeToMS(liveSplitRun.offset)
+                : 0,
               game: liveSplitRun.game || "",
               segments: []
             };
@@ -86,14 +90,17 @@ class ImportForm extends React.Component<IImportFormProps, IImportFormState> {
 
   private convertLiveSplitTimeToMS = (time: string | null) => {
     if (!time) {
-      return -1;
+      return Constants.SKIPPED;
     }
     const splittedTime = time.split(":");
-    const hours = parseInt(splittedTime[0], 10);
+    const hours = Math.abs(parseInt(splittedTime[0], 10));
     const minutes = parseInt(splittedTime[1], 10);
     const splittedSeconds = splittedTime[2].split(".");
     const seconds = parseInt(splittedSeconds[0], 10);
-    const milliseconds = parseInt(splittedSeconds[0].slice(0, 3), 10);
+    const milliseconds =
+      splittedSeconds.length > 1
+        ? parseInt(splittedSeconds[1].slice(0, 3), 10)
+        : 0;
     return (
       milliseconds +
       seconds * 1000 +

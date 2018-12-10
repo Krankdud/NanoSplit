@@ -8,4 +8,4 @@ NanoSplit is a web based speedrun timer built using TypeScript and React. This t
 - [ ] Export splits to LiveSplit format
 - [ ] Add colors to splits for behind, ahead, etc
 - [x] Add tip to press anywhere to start or split
-- [ ] Countdown before starting timer
+- [x] Countdown before starting timer

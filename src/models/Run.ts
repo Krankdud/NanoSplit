@@ -1,8 +1,9 @@
 import ISegment from "./Segment";
 
 interface IRun {
-  game: string;
   category: string;
+  delay: number;
+  game: string;
   segments: ISegment[];
 }
 
