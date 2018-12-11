@@ -36,7 +36,7 @@ class EditSplits extends React.Component<IEditSplitsProps, IEditSplitsState> {
     }
     this.state = {
       category: this.props.run.category,
-      delay: this.props.run.delay,
+      delay: Math.floor(this.props.run.delay / 1000),
       game: this.props.run.game,
       segments
     };
@@ -74,7 +74,7 @@ class EditSplits extends React.Component<IEditSplitsProps, IEditSplitsState> {
               <input
                 type="text"
                 name="delay"
-                defaultValue="0"
+                defaultValue={this.state.delay.toString()}
                 onChange={this.handleInputChange}
               />
             </label>
