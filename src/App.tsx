@@ -363,7 +363,7 @@ class App extends React.Component<{}, IAppState> {
     this.setState({
       dialog: {
         contents: (
-          <EditSplits run={this.state.run} onConfirm={this.confirmEditSplits} />
+          <EditSplits run={this.state.run} onConfirm={this.onRunEditted} />
         ),
         options: {
           showCloseButton: true,
@@ -379,7 +379,7 @@ class App extends React.Component<{}, IAppState> {
   private openImport = () => {
     this.setState({
       dialog: {
-        contents: <ImportForm onImport={this.onImport} />,
+        contents: <ImportForm onImport={this.onRunEditted} />,
         options: {
           showCloseButton: true,
           title: "Import",
@@ -391,13 +391,7 @@ class App extends React.Component<{}, IAppState> {
     });
   };
 
-  private onImport = (run: IRun) => {
-    this.resetTimer();
-    this.setState({ currentTime: -run.delay, run });
-    this.closeDialog();
-  };
-
-  private confirmEditSplits = (run: IRun) => {
+  private onRunEditted = (run: IRun) => {
     this.resetTimer();
     this.setState({ currentTime: -run.delay, run });
     this.closeDialog();
