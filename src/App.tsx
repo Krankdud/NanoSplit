@@ -85,6 +85,9 @@ class App extends React.Component<{}, IAppState> {
 
     const splits: JSX.Element[] = [];
     for (let i = 0; i < this.state.run.segments.length; i++) {
+      const historyIndex = !this.state.isTiming
+        ? this.state.history.length - 1
+        : this.state.currentSplit;
       splits.push(
         <Split
           key={i}
@@ -92,12 +95,8 @@ class App extends React.Component<{}, IAppState> {
           currentTime={this.state.currentTime}
           isCurrentSplit={this.state.isTiming && this.state.currentSplit === i}
           prevSegment={this.state.run.segments[i - 1]}
-          prevTotalTime={
-            this.state.history[this.state.currentSplit].segmentTimes[i - 1]
-          }
-          totalTime={
-            this.state.history[this.state.currentSplit].segmentTimes[i]
-          }
+          prevTotalTime={this.state.history[historyIndex].segmentTimes[i - 1]}
+          totalTime={this.state.history[historyIndex].segmentTimes[i]}
         />
       );
     }
