@@ -1,0 +1,23 @@
+.ahead-gaining-time {
+  color: #00cc36;
+}
+
+.ahead-losing-time {
+  color: #52cc73;
+}
+
+.behind-gaining-time {
+  color: #cc5c52;
+}
+
+.behind-losing-time {
+  color: #cc1200;
+}
+
+.best-segment {
+  color: #d8af1f;
+}
+
+.personal-best {
+  color: #16a6ff;
+}

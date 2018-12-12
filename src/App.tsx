@@ -91,7 +91,11 @@ class App extends React.Component<{}, IAppState> {
           segment={this.state.run.segments[i]}
           currentTime={this.state.currentTime}
           isCurrentSplit={this.state.isTiming && this.state.currentSplit === i}
-          segmentTime={
+          prevSegment={this.state.run.segments[i - 1]}
+          prevTotalTime={
+            this.state.history[this.state.currentSplit].segmentTimes[i - 1]
+          }
+          totalTime={
             this.state.history[this.state.currentSplit].segmentTimes[i]
           }
         />
