@@ -12,6 +12,7 @@ import ImportForm from "./dialogs/ImportForm";
 import Menu from "./menu/Menu";
 import IDialogData from "./models/DialogData";
 import IRun from "./models/Run";
+import ISegment from "./models/Segment";
 import Split from "./Split";
 import Timer from "./Timer";
 
@@ -23,6 +24,7 @@ interface IAppState {
   dialog: IDialogData;
   hasTapped: boolean;
   history: IHistory[];
+  isFinished: boolean;
   isPaused: boolean;
   isTiming: boolean;
   run: IRun;
@@ -52,6 +54,7 @@ class App extends React.Component<{}, IAppState> {
       },
       hasTapped: false,
       history: [{ segmentTimes: [] }],
+      isFinished: false,
       isPaused: false,
       isTiming: false,
       run: {
@@ -197,10 +200,13 @@ class App extends React.Component<{}, IAppState> {
   };
 
   private startTimer = () => {
+    this.updateRun();
+
     clearInterval(this.interval);
     this.setState({
       currentSplit: 0,
       history: [{ segmentTimes: [] }],
+      isFinished: false,
       isPaused: false,
       isTiming: true,
       startTime: Date.now() + this.state.run.delay
@@ -226,6 +232,7 @@ class App extends React.Component<{}, IAppState> {
     if (this.state.currentSplit >= this.state.run.segments.length - 1) {
       clearInterval(this.interval);
       this.setState({
+        isFinished: true,
         isTiming: false
       });
     } else {
@@ -253,6 +260,8 @@ class App extends React.Component<{}, IAppState> {
   };
 
   private resetTimer = () => {
+    this.updateRun();
+
     clearInterval(this.interval);
     this.setState({
       currentSplit: 0,
@@ -269,7 +278,8 @@ class App extends React.Component<{}, IAppState> {
 
     this.setState({
       currentSplit: this.state.currentSplit - 1,
-      history: this.state.history.slice(0, this.state.currentSplit)
+      history: this.state.history.slice(0, this.state.currentSplit),
+      isFinished: false
     });
   };
 
@@ -282,6 +292,59 @@ class App extends React.Component<{}, IAppState> {
 
     this.setState({
       currentSplit: this.state.currentSplit + 1
+    });
+  };
+
+  private updateRun = () => {
+    if (
+      this.state.history.length === 1 ||
+      this.state.run.segments.length === 0
+    ) {
+      return;
+    }
+
+    const segmentTimes = this.state.history[this.state.history.length - 1]
+      .segmentTimes;
+    const runSegments = this.state.run.segments;
+    const pbTime = runSegments[runSegments.length - 1].pbTime;
+    let updatePB = false;
+    if (
+      this.state.isFinished &&
+      pbTime &&
+      segmentTimes[segmentTimes.length - 1] < pbTime
+    ) {
+      updatePB = true;
+    }
+
+    const segments: ISegment[] = [];
+    for (let i = 0; i < runSegments.length; i++) {
+      const currentSegment = this.state.run.segments[i];
+      const segmentPB = updatePB ? segmentTimes[i] : currentSegment.pbTime;
+
+      let segmentBest = currentSegment.bestTime;
+      if (i < segmentTimes.length) {
+        const time =
+          i === 0 ? segmentTimes[i] : segmentTimes[i] - segmentTimes[i - 1];
+        if (!segmentBest || (segmentBest && time < segmentBest)) {
+          segmentBest = time;
+        }
+      }
+
+      segments.push({
+        bestTime: segmentBest,
+        id: currentSegment.id,
+        pbTime: segmentPB,
+        title: currentSegment.title
+      });
+    }
+
+    this.setState({
+      run: {
+        category: this.state.run.category,
+        delay: this.state.run.delay,
+        game: this.state.run.game,
+        segments
+      }
     });
   };
 
