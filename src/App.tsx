@@ -134,7 +134,18 @@ class App extends React.Component<{}, IAppState> {
             {title}
           </div>
           <div onClick={this.onTap}>
-            <Timer time={this.state.currentTime} />
+            <Timer
+              isFinished={this.state.isFinished}
+              isTiming={this.state.isTiming}
+              prevSegment={this.state.run.segments[this.state.currentSplit - 1]}
+              prevTime={
+                this.state.history[this.state.currentSplit].segmentTimes[
+                  this.state.currentSplit - 1
+                ]
+              }
+              segment={this.state.run.segments[this.state.currentSplit]}
+              time={this.state.currentTime}
+            />
           </div>
         </div>
         <div className="splits" id="splits" onClick={this.onTap}>
@@ -267,6 +278,7 @@ class App extends React.Component<{}, IAppState> {
       currentSplit: 0,
       currentTime: -this.state.run.delay,
       history: [{ segmentTimes: [] }],
+      isFinished: false,
       isTiming: false
     });
   };
