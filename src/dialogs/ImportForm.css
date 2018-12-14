@@ -6,3 +6,36 @@
   margin-bottom: 1rem;
   font-size: 1rem;
 }
+
+.import-description {
+  margin-bottom: 1rem;
+}
+
+.import-description a {
+  color: #54a0ff;
+}
+
+.import-description a:visited {
+  color: #54a0ff;
+}
+
+.import-button {
+  display: inline-block;
+  padding: 1rem;
+  font-size: 1rem;
+  color: #222f3e;
+  background-color: #c8d6e5;
+  border-style: none;
+  border-radius: 0.5rem;
+}
+
+[type="file"] {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute !important;
+  white-space: nowrap;
+}

@@ -32,19 +32,29 @@ class ImportForm extends React.Component<IImportFormProps, IImportFormState> {
           </div>
         )}
         <div className="import-description">
-          Import splits from <a href="https://www.livesplit.org">LiveSplit</a>
+          Import splits from <a href="http://www.livesplit.org">LiveSplit</a>
         </div>
-        <form onSubmit={this.handleSubmit}>
-          <input type="file" accept=".lss" ref={this.fileInput} />
-          <input type="submit" value="Import" />
+        <form>
+          <label className="import-button">
+            Choose a file
+            <input
+              type="file"
+              accept=".lss"
+              ref={this.fileInput}
+              onChange={this.handleChange}
+            />
+          </label>
         </form>
       </div>
     );
   }
 
-  private handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    if (this.fileInput.current && this.fileInput.current.files) {
+  private handleChange = (event: React.FormEvent<HTMLInputElement>) => {
+    if (
+      this.fileInput.current &&
+      this.fileInput.current.files &&
+      this.fileInput.current.files.length > 0
+    ) {
       const fileReader = new FileReader();
       fileReader.readAsText(this.fileInput.current.files[0]);
 
