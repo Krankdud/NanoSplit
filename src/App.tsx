@@ -9,6 +9,7 @@ import Dialog from "./dialog/Dialog";
 import { DialogType } from "./dialog/DialogOptions";
 import EditSplits from "./dialogs/EditSplits";
 import ImportForm from "./dialogs/ImportForm";
+import exportRun from "./Export";
 import Menu from "./menu/Menu";
 import IDialogData from "./models/DialogData";
 import IRun from "./models/Run";
@@ -187,7 +188,9 @@ class App extends React.Component<{}, IAppState> {
           <div className="sidenav-item" onClick={this.openImport}>
             Import
           </div>
-          <div className="sidenav-item">Export</div>
+          <div className="sidenav-item" onClick={this.onExport}>
+            Export
+          </div>
           <div className="sidenav-item">Settings</div>
         </Menu>
         <Dialog
@@ -467,6 +470,10 @@ class App extends React.Component<{}, IAppState> {
       showDialog: true,
       showMenu: false
     });
+  };
+
+  private onExport = () => {
+    exportRun(this.state.run);
   };
 
   private onRunEditted = (run: IRun) => {

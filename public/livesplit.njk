@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Run version="1.7.0">
+    <GameIcon />
+    <GameName>{{ game }}</GameName>
+    <CategoryName>{{ category }}</CategoryName>
+    <Offset>{{ offset }}</Offset>
+    <Segments>
+        {% for segment in segments %}
+        <Segment>
+            <Name>{{ segment.name }}</Name>
+            <Icon />
+            <SplitTimes>
+                {% for splitTime in segment.splitTimes %}
+                <SplitTime name="Personal Best">
+                    <RealTime>{{ splitTime.realTime }}</RealTime>
+                </SplitTime>
+                {% endfor %}
+            </SplitTimes>
+            <BestSegmentTime>
+                <RealTime>{{ segment.bestSegmentTime.realTime }}</RealTime>
+            </BestSegmentTime>
+        </Segment>
+        {% endfor %}
+    </Segments>
+</Run>
