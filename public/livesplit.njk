@@ -3,7 +3,18 @@
     <GameIcon />
     <GameName>{{ game }}</GameName>
     <CategoryName>{{ category }}</CategoryName>
+    <Metadata>
+        <Run id="" />
+        <Platform usesEmulator="false">
+        </Platform>
+        <Region>
+        </Region>
+        <Variables />
+    </Metadata>
     <Offset>{{ offset }}</Offset>
+    <AttemptCount>0</AttemptCount>
+    <AttemptHistory>
+    </AttemptHistory>
     <Segments>
         {% for segment in segments %}
         <Segment>
@@ -19,7 +30,10 @@
             <BestSegmentTime>
                 <RealTime>{{ segment.bestSegmentTime.realTime }}</RealTime>
             </BestSegmentTime>
+            <SegmentHistory>
+            </SegmentHistory>
         </Segment>
         {% endfor %}
     </Segments>
+    <AutoSplitterSettings />
 </Run>

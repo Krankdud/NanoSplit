@@ -44,12 +44,19 @@ function timeToLiveSplitTime(time: number, includeMS: boolean = true): string {
   const hours = Math.floor(time / 360000);
   return (
     "" +
-    hours +
+    (hours < 10 ? "0" + hours : hours) +
     ":" +
-    minutes +
+    (minutes < 10 ? "0" + minutes : minutes) +
     ":" +
-    seconds +
-    (includeMS ? "." + milliseconds : "")
+    (seconds < 10 ? "0" + seconds : seconds) +
+    (includeMS
+      ? "." +
+        (milliseconds < 10
+          ? "00" + milliseconds
+          : milliseconds < 100
+          ? "0" + milliseconds
+          : milliseconds)
+      : "")
   );
 }
 
