@@ -1,6 +1,8 @@
 import exportLiveSplitToXML from "./livesplit/Export";
 import IRun from "./models/Run";
 
+let exportObjectURL: string | null = null;
+
 function exportRun(run: IRun) {
   const liveSplitSegments: ILiveSplitSegment[] = [];
   run.segments.forEach(segment => {
@@ -26,8 +28,13 @@ function exportRun(run: IRun) {
     segments: liveSplitSegments
   };
   const xml = exportLiveSplitToXML(liveSplitRun);
-  // tslint:disable-next-line:no-console
-  console.log(xml);
+  const blob = new Blob([xml], { type: "application/octet-stream" });
+
+  if (exportObjectURL !== null) {
+    window.URL.revokeObjectURL(exportObjectURL);
+  }
+  exportObjectURL = window.URL.createObjectURL(blob);
+  return exportObjectURL;
 }
 
 function delayToOffset(delay: number): string {

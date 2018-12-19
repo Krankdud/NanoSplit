@@ -473,7 +473,20 @@ class App extends React.Component<{}, IAppState> {
   };
 
   private onExport = () => {
-    exportRun(this.state.run);
+    const url = exportRun(this.state.run);
+
+    const link = document.createElement("a");
+    link.setAttribute("download", "splits.lss");
+    link.href = url;
+    document.body.appendChild(link);
+
+    window.requestAnimationFrame(() => {
+      const event = new MouseEvent("click");
+      link.dispatchEvent(event);
+      document.body.removeChild(link);
+    });
+
+    this.setState({ showMenu: false });
   };
 
   private onRunEditted = (run: IRun) => {
