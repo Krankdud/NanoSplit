@@ -1,4 +1,5 @@
 import * as React from "react";
+import Constants from "src/Constants";
 import exportLiveSplitToXML from "src/livesplit/Export";
 import IRun from "src/models/Run";
 import "./ExportForm.css";
@@ -73,16 +74,18 @@ class ExportForm extends React.Component<IExportFormProps> {
     run.segments.forEach(segment => {
       liveSplitSegments.push({
         bestSegmentTime: {
-          realTime: segment.bestTime
-            ? timeToLiveSplitTime(segment.bestTime)
-            : null
+          realTime:
+            segment.bestTime && segment.bestTime !== Constants.SKIPPED
+              ? timeToLiveSplitTime(segment.bestTime)
+              : null
         },
         name: segment.title,
         splitTimes: [
           {
-            realTime: segment.pbTime
-              ? timeToLiveSplitTime(segment.pbTime)
-              : null
+            realTime:
+              segment.pbTime && segment.pbTime !== Constants.SKIPPED
+                ? timeToLiveSplitTime(segment.pbTime)
+                : null
           }
         ]
       });

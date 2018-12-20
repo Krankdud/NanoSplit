@@ -23,12 +23,16 @@
             <SplitTimes>
                 {% for splitTime in segment.splitTimes %}
                 <SplitTime name="Personal Best">
+                    {% if splitTime.realTime !== null %}
                     <RealTime>{{ splitTime.realTime }}</RealTime>
+                    {% endif %}
                 </SplitTime>
                 {% endfor %}
             </SplitTimes>
             <BestSegmentTime>
+                {% if segment.bestSegmentTime.realTime !== null %}
                 <RealTime>{{ segment.bestSegmentTime.realTime }}</RealTime>
+                {% endif %}
             </BestSegmentTime>
             <SegmentHistory>
             </SegmentHistory>
