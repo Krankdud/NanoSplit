@@ -149,7 +149,13 @@ class App extends React.Component<{}, IAppState> {
             />
           </div>
         </div>
-        <div className="splits" id="splits" onClick={this.onTap}>
+        <div
+          className={
+            this.state.hasTapped ? "splits" : "splits splits-hint-active"
+          }
+          id="splits"
+          onClick={this.onTap}
+        >
           {splits}
         </div>
         <div id="footer" className="footer">

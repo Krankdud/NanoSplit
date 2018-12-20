@@ -50,6 +50,10 @@
   margin-bottom: 96px;
 }
 
+.splits-hint-active {
+  margin-bottom: 116px;
+}
+
 .footer {
   position: fixed;
   left: 0;
