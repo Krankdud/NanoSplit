@@ -1,0 +1,22 @@
+.export-warning {
+  margin-bottom: 1rem;
+}
+
+.export-ios {
+  margin-top: 1rem;
+}
+
+.export-button {
+  display: inline-block;
+  padding: 1rem;
+  font-size: 1rem;
+  color: #222f3e;
+  background-color: #c8d6e5;
+  border-style: none;
+  border-radius: 0.5rem;
+}
+
+.export-textarea {
+  width: 100%;
+  height: 3rem;
+}

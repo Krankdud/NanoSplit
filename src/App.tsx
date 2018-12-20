@@ -8,8 +8,9 @@ import Constants from "./Constants";
 import Dialog from "./dialog/Dialog";
 import { DialogType } from "./dialog/DialogOptions";
 import EditSplits from "./dialogs/EditSplits";
+import ExportForm from "./dialogs/ExportForm";
 import ImportForm from "./dialogs/ImportForm";
-import exportRun from "./Export";
+// import exportRun from "./Export";
 import Menu from "./menu/Menu";
 import IDialogData from "./models/DialogData";
 import IRun from "./models/Run";
@@ -473,6 +474,20 @@ class App extends React.Component<{}, IAppState> {
   };
 
   private onExport = () => {
+    this.setState({
+      dialog: {
+        contents: <ExportForm run={this.state.run} />,
+        options: {
+          showCloseButton: true,
+          title: "Export",
+          type: DialogType.Modal
+        }
+      },
+      showDialog: true,
+      showMenu: false
+    });
+
+    /*
     const url = exportRun(this.state.run);
 
     const link = document.createElement("a");
@@ -487,6 +502,7 @@ class App extends React.Component<{}, IAppState> {
     });
 
     this.setState({ showMenu: false });
+    */
   };
 
   private onRunEditted = (run: IRun) => {
