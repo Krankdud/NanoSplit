@@ -1,0 +1,11 @@
+.help-content {
+  font-size: 1rem;
+}
+
+.help-content a {
+  color: #54a0ff;
+}
+
+.help-content a:visited {
+  color: #54a0ff;
+}

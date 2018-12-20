@@ -9,6 +9,7 @@ import Dialog from "./dialog/Dialog";
 import { DialogType } from "./dialog/DialogOptions";
 import EditSplits from "./dialogs/EditSplits";
 import ExportForm from "./dialogs/ExportForm";
+import HelpDialog from "./dialogs/HelpDialog";
 import ImportForm from "./dialogs/ImportForm";
 import Menu from "./menu/Menu";
 import IDialogData from "./models/DialogData";
@@ -197,7 +198,9 @@ class App extends React.Component<{}, IAppState> {
           <div className="sidenav-item" onClick={this.onExport}>
             Export
           </div>
-          <div className="sidenav-item">Settings</div>
+          <div className="sidenav-item" onClick={this.onHelp}>
+            Help
+          </div>
         </Menu>
         <Dialog
           isOpen={this.state.showDialog}
@@ -486,6 +489,21 @@ class App extends React.Component<{}, IAppState> {
           showCloseButton: true,
           title: "Export",
           type: DialogType.Modal
+        }
+      },
+      showDialog: true,
+      showMenu: false
+    });
+  };
+
+  private onHelp = () => {
+    this.setState({
+      dialog: {
+        contents: <HelpDialog />,
+        options: {
+          showCloseButton: true,
+          title: "Help",
+          type: DialogType.Fullscreen
         }
       },
       showDialog: true,
