@@ -418,7 +418,7 @@ class App extends React.Component<{}, IAppState> {
       game: "",
       segments: []
     };
-    this.setState({ run });
+    this.setState({ currentTime: 0, run });
     this.closeDialog();
   };
 
