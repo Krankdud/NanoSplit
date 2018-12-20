@@ -10,7 +10,6 @@ import { DialogType } from "./dialog/DialogOptions";
 import EditSplits from "./dialogs/EditSplits";
 import ExportForm from "./dialogs/ExportForm";
 import ImportForm from "./dialogs/ImportForm";
-// import exportRun from "./Export";
 import Menu from "./menu/Menu";
 import IDialogData from "./models/DialogData";
 import IRun from "./models/Run";

@@ -31,7 +31,10 @@ class Timer extends React.Component<ITimerProps> {
   }
 
   private getTimerColor() {
-    if (!this.props.isTiming && !this.props.isFinished) {
+    if (
+      this.props.time < 0 ||
+      (!this.props.isTiming && !this.props.isFinished)
+    ) {
       return "";
     }
 
