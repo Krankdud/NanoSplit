@@ -19,6 +19,7 @@
 
 .dialog-transition-active {
   position: fixed;
+  z-index: 2;
   left: 0;
   bottom: 0;
   width: 100%;
@@ -29,6 +30,7 @@
 
 .dialog-transition-inactive {
   position: fixed;
+  z-index: 2;
   left: 0;
   bottom: -100px;
   width: 100%;
