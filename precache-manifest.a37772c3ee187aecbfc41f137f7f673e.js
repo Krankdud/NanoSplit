@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "4b65d4ff193027c718f8",
-    "url": "/NanoSplit/static/css/main.88341955.chunk.css"
+    "revision": "21deaf6e6388cec1c530",
+    "url": "/NanoSplit/static/css/main.b018d85f.chunk.css"
   },
   {
-    "revision": "4b65d4ff193027c718f8",
-    "url": "/NanoSplit/static/js/main.4b65d4ff.chunk.js"
+    "revision": "21deaf6e6388cec1c530",
+    "url": "/NanoSplit/static/js/main.21deaf6e.chunk.js"
   },
   {
     "revision": "c14d53d144c87cda91cd",
@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/NanoSplit/static/js/runtime~main.4d64d1cf.js"
   },
   {
-    "revision": "c2c92095cd130a7887dc3812424d261c",
+    "revision": "377dbc32d1c68ad2cb1c8396bdde8485",
     "url": "/NanoSplit/index.html"
   }
 ];
